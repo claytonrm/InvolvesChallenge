@@ -8,16 +8,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.City;
-import repository.CityRepository;
+import repository.CityInMemoryRepository;
 import repository.Repository;
 
-public class CityRepositoryTest {
+public class CityInMemoryRepositoryTest {
 
 	private Repository<City> repository;
 	
 	@Before
 	public void setUp() throws Exception {
-		repository = new CityRepository();
+		repository = new CityInMemoryRepository();
 	}
 
 	@Test

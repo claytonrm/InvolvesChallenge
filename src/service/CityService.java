@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import model.City;
-import repository.CityRepository;
+import repository.CityInMemoryRepository;
 import repository.Repository;
 
 public class CityService extends AbstractService<City> {
@@ -12,7 +12,7 @@ public class CityService extends AbstractService<City> {
 	private Repository<City> repository;
 	
 	public CityService() {
-		repository = new CityRepository();
+		repository = new CityInMemoryRepository();
 	}
 	
 	@Override

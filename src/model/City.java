@@ -1,16 +1,37 @@
 package model;
 
+import annotation.CSVProperty;
+
 public class City {
 
+	@CSVProperty(column = "ibge_id")
 	private Long ibgeId;
-	private String name;
+	
+	@CSVProperty(column = "uf")
 	private String uf;
+	
+	@CSVProperty(column = "name")
+	private String name;
+	
+	@CSVProperty(column = "capital")
 	private Boolean capital;
+	
+	@CSVProperty(column = "lon")
 	private Double longitude;
+	
+	@CSVProperty(column = "lat")
 	private Double latitude;
+	
+	@CSVProperty(column = "no_accents")
 	private String noAccents;
+	
+	@CSVProperty(column = "alternative_names")
 	private String alternativeNames;
+	
+	@CSVProperty(column = "microregion")
 	private String microregion;
+	
+	@CSVProperty(column = "mesoregion")
 	private String mesoregion;
 
 	public Long getIbgeId() {
@@ -21,20 +42,20 @@ public class City {
 		this.ibgeId = ibgeId;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(final String name) {
-		this.name = name;
-	}
-
 	public String getUf() {
 		return uf;
 	}
 
 	public void setUf(final String uf) {
 		this.uf = uf;
+	}
+
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(final String name) {
+		this.name = name;
 	}
 
 	public Boolean getCapital() {

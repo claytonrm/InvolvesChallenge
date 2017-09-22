@@ -17,12 +17,12 @@ public class Reader {
 	
 	/**
 	 * @param fileName - The entire path of the file.
-	 * @param splitter - The splitter to separate in columns.
+	 * @param separator - The separator to separate in columns.
 	 * @param containsHeader - Indicates whether the file contains a header.
 	 * @return A Map<String, List<String[]> which key is header and content and value is the columns
 	 * from csv file.
 	 */
-	public static Map<String, List<String[]>> readCsv(final String fileName, final String splitter, final boolean containsHeader) {
+	public static Map<String, List<String[]>> readCsv(final String fileName, final String separator, final boolean containsHeader) {
 		final Path path = Paths.get(fileName);
 		final Map<String, List<String[]>> fullContent = new HashMap<>();
 		
@@ -31,7 +31,7 @@ public class Reader {
 			
 			String line;
 			while ((line = reader.readLine()) != null) {
-				final String[] columns = line.split(splitter);
+				final String[] columns = line.split(separator);
 				final List<String[]> header = fullContent.get(HEADER);
 
 				if (containsHeader && header == null) {
@@ -45,7 +45,7 @@ public class Reader {
 			
 			fullContent.put(CONTENT, content);
 		} catch (IOException e) {
-			System.out.println("Cannot read this file %s.");
+			System.err.println("Cannot read this file \"%s\".");
 		}
 
 		return fullContent;
@@ -53,12 +53,12 @@ public class Reader {
 	
 	/**
 	 * @param fileName - The entire path of the file.
-	 * @param splitter - The splitter to separate in columns.
+	 * @param separator - The separator to separate in columns.
 	 * @return A Map<String, List<String[]> which key is header and content and value is the columns
 	 * from csv file.
 	 */
-	public static Map<String, List<String[]>> readCsv(final String fileName, final String splitter) {
-		return readCsv(fileName, splitter, false);
+	public static Map<String, List<String[]>> readCsv(final String fileName, final String separator) {
+		return readCsv(fileName, separator, false);
 	}
 
 }

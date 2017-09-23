@@ -4,36 +4,18 @@ import annotation.CSVProperty;
 
 public class City {
 
-	@CSVProperty(column = "ibge_id")
 	private Long ibgeId;
-	
-	@CSVProperty(column = "uf")
 	private String uf;
-	
-	@CSVProperty(column = "name")
 	private String name;
-	
-	@CSVProperty(column = "capital")
 	private Boolean capital;
-	
-	@CSVProperty(column = "lon")
 	private Double longitude;
-	
-	@CSVProperty(column = "lat")
 	private Double latitude;
-	
-	@CSVProperty(column = "no_accents")
 	private String noAccents;
-	
-	@CSVProperty(column = "alternative_names")
 	private String alternativeNames;
-	
-	@CSVProperty(column = "microregion")
 	private String microregion;
-	
-	@CSVProperty(column = "mesoregion")
 	private String mesoregion;
 
+	@CSVProperty(column = "ibge_id")
 	public Long getIbgeId() {
 		return ibgeId;
 	}
@@ -42,6 +24,7 @@ public class City {
 		this.ibgeId = ibgeId;
 	}
 
+	@CSVProperty(column = "uf")
 	public String getUf() {
 		return uf;
 	}
@@ -50,6 +33,7 @@ public class City {
 		this.uf = uf;
 	}
 
+	@CSVProperty(column = "name")
 	public String getName() {
 		return name;
 	}
@@ -58,6 +42,7 @@ public class City {
 		this.name = name;
 	}
 
+	@CSVProperty(column = "capital")
 	public Boolean getCapital() {
 		return capital;
 	}
@@ -66,6 +51,7 @@ public class City {
 		this.capital = capital;
 	}
 
+	@CSVProperty(column = "lon")
 	public Double getLongitude() {
 		return longitude;
 	}
@@ -74,6 +60,7 @@ public class City {
 		this.longitude = longitude;
 	}
 
+	@CSVProperty(column = "lat")
 	public Double getLatitude() {
 		return latitude;
 	}
@@ -82,6 +69,7 @@ public class City {
 		this.latitude = latitude;
 	}
 
+	@CSVProperty(column = "no_accents")
 	public String getNoAccents() {
 		return noAccents;
 	}
@@ -90,6 +78,7 @@ public class City {
 		this.noAccents = noAccents;
 	}
 
+	@CSVProperty(column = "alternative_names")
 	public String getAlternativeNames() {
 		return alternativeNames;
 	}
@@ -98,6 +87,7 @@ public class City {
 		this.alternativeNames = alternativeNames;
 	}
 
+	@CSVProperty(column = "microregion")
 	public String getMicroregion() {
 		return microregion;
 	}
@@ -106,6 +96,7 @@ public class City {
 		this.microregion = microregion;
 	}
 
+	@CSVProperty(column = "mesoregion")
 	public String getMesoregion() {
 		return mesoregion;
 	}
@@ -114,4 +105,28 @@ public class City {
 		this.mesoregion = mesoregion;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((ibgeId == null) ? 0 : ibgeId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		City other = (City) obj;
+		if (ibgeId == null) {
+			if (other.ibgeId != null)
+				return false;
+		} else if (!ibgeId.equals(other.ibgeId))
+			return false;
+		return true;
+	}
 }

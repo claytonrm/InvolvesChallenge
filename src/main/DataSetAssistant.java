@@ -29,14 +29,17 @@ public class DataSetAssistant {
 		if (params[0].equalsIgnoreCase("count")) {
 			
 			if (params[1].equalsIgnoreCase("*")) {
-				final int numberTotal = service.findAll().size();
+				final long numberTotal = service.countAll();
 				
 				System.out.println(numberTotal);
 				return;
 			}
 			
 			if (params[1].equalsIgnoreCase("distinct")) {
+				final String property = params[2].replaceAll("[\\[\\]]", "").toLowerCase();
+				final long numberTotalByProperty = service.countDistinctBy(property);
 				
+				System.out.println(numberTotalByProperty);
 				return;
 			}
 			
@@ -44,6 +47,18 @@ public class DataSetAssistant {
 		}
 		
 		if (params[0].equalsIgnoreCase("filter")) {
+			final String property = params[1].toLowerCase();
+			final String value = params[2];
+			
+			if (property != null && value != null) {
+				service.filterBy(property, value);
+			}
+			
+			final String mock = "ibge_id,uf,name,capital,lon,lat,no_accents,alternative_names,microregion,mesoregion\n" + 
+					"1721000,TO,Palmas,true,-48.3510437082,-10.1632533268,Palmas,,Porto Nacional,Oriental do Tocantins\n" + 
+					"4117602,PR,Palmas,,-51.9887738877,-26.481472515,Palmas,,Palmas,Centro-Sul Paranaense\n";
+			
+			System.out.println(mock);
 			return;
 		}
 		System.err.println("Invalid param!");
@@ -57,7 +72,7 @@ public class DataSetAssistant {
 		return true;
 	}
 
-	public void setInput(final String csvFileName, final String separator) {
+	public void load(final String csvFileName, final String separator) {
 		final Map<String, List<String[]>> fullContent = Reader.readCsv(csvFileName, separator, true);
 		final List<String[]> records = fullContent.get("content");
 		

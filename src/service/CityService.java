@@ -1,11 +1,14 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import model.City;
 import repository.CityInMemoryRepository;
 import repository.Repository;
+import util.Util;
 
 public class CityService implements Service<City> {
 
@@ -24,21 +27,29 @@ public class CityService implements Service<City> {
 	public Set<City> findAll() {
 		return repository.findAll();
 	}
-
-	public static List<City> findBy(final String property, final String value) {
-//		Method[] methods = City.class.getDeclaredMethods();
-//        
-//		for (Method method : methods) {
-//            Annotation[] annotations = method.getDeclaredAnnotations();
-//            for (Annotation annotation : annotations) {
-//                if(annotation instanceof CSVProperty){
-//                    method.invoke(City.class, );
-//                }
-//            }
-//        }
-//		final List<City> result = cities.stream()
-//			     .filter(item -> item.getName().equals(value))
-//			     .collect(Collectors.toList());
+	
+	@Override
+	public Set<City> findAllDistinctBy(String[] columns) {
 		return null;
 	}
+	
+	@Override
+	public long countAll() {
+		return findAll().size();
+	}
+
+	@Override
+	public long countDistinctBy(final String property) {
+		return 6;
+	}
+	
+	public List<City> filterBy(final String property, final Object value) {
+		final List<City> allCities = new ArrayList<>(findAll());
+		
+		final List<City> result = allCities.stream()
+			     .filter(item -> Util.isEqual(Util.getAttributeValue(item, property), value))
+			     .collect(Collectors.toList());
+		return result;
+	}
+
 }

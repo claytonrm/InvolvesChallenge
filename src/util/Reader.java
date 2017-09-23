@@ -12,8 +12,8 @@ import java.util.Map;
 
 public class Reader {
 
-	private static String HEADER = "header";
-	private static String CONTENT = "content";
+	private static final String HEADER = "header";
+	private static final String CONTENT = "content";
 	
 	/**
 	 * @param fileName - The entire path of the file.

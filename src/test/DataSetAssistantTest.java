@@ -1,33 +1,50 @@
 package test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import model.City;
-import util.Reader;
+import main.DataSetAssistant;
+import util.Writer;
 
 public class DataSetAssistantTest {
 
-	private static final String SEPARATOR = ",";
-	private static String fileName = "files/test.csv";
+	private static Path path;
 	
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
+	private static DataSetAssistant dataSetAssistant;
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		createAnyCsvContent(fileName);
+		final Map<String, List<String[]>> fileContent = new HashMap<>();
+		fileContent.put("header", createHeader());
+		fileContent.put("content", createContent());
+		
+		path = Paths.get("files/test.csv");
+		
+		Writer.createCsvFile(path.toAbsolutePath().toString(), fileContent);
+		
+		dataSetAssistant = new DataSetAssistant();
+		dataSetAssistant.setInput(path.toAbsolutePath().toString(), ",");
+	}
+	
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+		Files.delete(path);
 	}
 
 	@Before
@@ -37,62 +54,42 @@ public class DataSetAssistantTest {
 	}
 
 	@Test
-	public void shouldInicializeDataSet() {
-		final Map<String, List<String[]>> fullContent = Reader.readCsv(fileName, SEPARATOR, true);
-		final List<String[]> records = fullContent.get("content");
+	public void shouldPrintTotalRecords() {
+		final String[] params = new String[] {"count", "*"};
 		
-		final Set<City> cities = new HashSet<>();
+		dataSetAssistant.assist(params);
 		
-		for (String[] column : records) {
-			final City city = new City();
-			city.setIbgeId(Long.parseLong(column[0]));
-			city.setUf(column[1]);
-			city.setName(column[2]);
-			city.setCapital(Boolean.valueOf(column[3]));
-			city.setLongitude(Double.valueOf(column[4]));
-			city.setLatitude(Double.valueOf(column[5]));
-			city.setNoAccents(column[6]);
-			city.setAlternativeNames(column[7]);
-			city.setMicroregion(column[8]);
-			city.setMesoregion(column[9]);
-			cities.add(city);
-		}
-//		service.insertAll(cities);
+		Assert.assertEquals(2 + "\n", outContent.toString());
 	}
 	
-	private static void createAnyCsvContent(final String fileName) throws Exception {
-		FileWriter writer = null;
-		try {
-			writer = new FileWriter(fileName);
-			final Set<City> cities = new HashSet<>(createAnyCities());
-			
-			for (City cityItem : cities) {
-				writer.append(cityItem.getIbgeId().toString()).append(SEPARATOR)
-				.append(cityItem.getName()).append(SEPARATOR)
-				.append(cityItem.getUf()).append(SEPARATOR);
-			}
-			
-		} catch (IOException e) {
-			System.err.println(e.getStackTrace());
-		} finally {
-			writer.close();
-		}
+	@Test
+	public void shouldPrintAnErrorInvalidParam() {
+		final String[] params = new String[] {"max", "*"};
+		
+		dataSetAssistant.assist(params);
+		
+		Assert.assertEquals("Invalid param!\n", errContent.toString());
 	}
 	
-	private static List<City> createAnyCities() {
-		final City c1 = createCity(123L, "Criciúma", "SC");
-		final City c2 = createCity(456L, "Gravatal", "SC");
-		final City c3 = createCity(789L, "São Paulo", "SP");
-		final City c4 = createCity(111L, "Florianópolis", "SC");
-		return Arrays.asList(c1, c2, c3, c4);
+	private static List<String[]> createHeader() {
+		final String[] columns = new String[] {"ibge_id", "uf", "name", "capital", "lon", "lat", 
+				"no_accents", "alternative_names", "microregion", "mesoregion"};
+		
+		final List<String[]> header = new ArrayList<>();
+		header.add(columns);
+		return header;
 	}
+	
+	private static List<String[]> createContent() {
+		final String[] row1 = new String[] {"1100015", "RO", "Alta Floresta D'Oeste", "", "-61.9998238963", 
+				"-11.9355403048", "Alta Floresta D'Oeste", "", "Cacoal", "Leste Rondoniense"};
+		final String[] row2 = new String[] {"1501402", "PA", "Belém", "true", "-48.4878256875", 
+				"-1.459845", "Belem", "", "Belém", "Metropolitana de Belém"};
 
-	private static City createCity(final Long ibgeId, final String name, final String uf) {
-		final City city = new City();
-		city.setIbgeId(ibgeId);
-		city.setName(name);
-		city.setUf(uf);
-		return city;
+		final List<String[]> content = new ArrayList<>();
+		content.add(row1);
+		content.add(row2);
+		return content;
 	}
 
 }

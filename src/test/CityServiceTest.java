@@ -26,7 +26,7 @@ public class CityServiceTest {
 	}
 	
 	@Test
-	public void shouldCreateASetOfCities() {
+	public void shouldInsertAllCities() {
 		final Set<City> cities = new HashSet<>();
 		final City city = new City();
 		city.setName("Florianópolis");
@@ -37,4 +37,5 @@ public class CityServiceTest {
 		Assert.assertTrue(!cities.isEmpty());
 		Assert.assertEquals(cities.size(), 1);
 	}
+	
 }

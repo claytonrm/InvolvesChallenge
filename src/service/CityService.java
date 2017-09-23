@@ -7,7 +7,7 @@ import model.City;
 import repository.CityInMemoryRepository;
 import repository.Repository;
 
-public class CityService extends AbstractService<City> {
+public class CityService implements Service<City> {
 
 	private Repository<City> repository;
 	
@@ -16,13 +16,13 @@ public class CityService extends AbstractService<City> {
 	}
 	
 	@Override
+	public void insertAll(final Set<City> entities) {
+		repository.insertAll(entities);
+	}
+	
+	@Override
 	public Set<City> findAll() {
 		return repository.findAll();
-	}
-
-	@Override
-	public void insertAll(Set<City> entities) {
-		repository.insertAll(entities);
 	}
 
 	public static List<City> findBy(final String property, final String value) {

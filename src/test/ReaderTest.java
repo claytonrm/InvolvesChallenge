@@ -73,6 +73,4 @@ public class ReaderTest {
 		Assert.assertEquals("Cannot read this file \"%s\".\n", errContent.toString());
 		
 	}
-	
-
 }

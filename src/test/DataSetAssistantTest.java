@@ -7,17 +7,17 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import main.Main;
 import model.City;
+import util.Reader;
 
-public class MainTest {
+public class DataSetAssistantTest {
 
 	private static final String SEPARATOR = ",";
 	private static String fileName = "files/test.csv";
@@ -37,10 +37,27 @@ public class MainTest {
 	}
 
 	@Test
-	public void shouldInicializateData() {
-		final String[] params = new String[] {"count *"};
-		Main.main(params);
-		Assert.assertEquals("4\n", outContent.toString());
+	public void shouldInicializeDataSet() {
+		final Map<String, List<String[]>> fullContent = Reader.readCsv(fileName, SEPARATOR, true);
+		final List<String[]> records = fullContent.get("content");
+		
+		final Set<City> cities = new HashSet<>();
+		
+		for (String[] column : records) {
+			final City city = new City();
+			city.setIbgeId(Long.parseLong(column[0]));
+			city.setUf(column[1]);
+			city.setName(column[2]);
+			city.setCapital(Boolean.valueOf(column[3]));
+			city.setLongitude(Double.valueOf(column[4]));
+			city.setLatitude(Double.valueOf(column[5]));
+			city.setNoAccents(column[6]);
+			city.setAlternativeNames(column[7]);
+			city.setMicroregion(column[8]);
+			city.setMesoregion(column[9]);
+			cities.add(city);
+		}
+//		service.insertAll(cities);
 	}
 	
 	private static void createAnyCsvContent(final String fileName) throws Exception {

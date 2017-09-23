@@ -43,13 +43,13 @@ public class CityService implements Service<City> {
 		return 6;
 	}
 	
+	@Override
 	public List<City> filterBy(final String property, final Object value) {
 		final List<City> allCities = new ArrayList<>(findAll());
 		
-		final List<City> result = allCities.stream()
+		return allCities.stream()
 			     .filter(item -> Util.isEqual(Util.getAttributeValue(item, property), value))
 			     .collect(Collectors.toList());
-		return result;
 	}
 
 }

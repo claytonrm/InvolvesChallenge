@@ -1,6 +1,6 @@
 package main;
 
-import util.DataSetAssistant;
+import application.DataSetAssistant;
 
 public class Main {
 	

@@ -1,4 +1,4 @@
-package util;
+package application;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -14,6 +14,9 @@ import java.util.Map;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+
+import application.DataSetAssistant;
+import util.Writer;
 
 public class DataSetAssistantTest {
 

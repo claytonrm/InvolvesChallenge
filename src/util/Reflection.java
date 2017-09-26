@@ -56,7 +56,7 @@ public class Reflection {
 		}
 		
 		if (attributeValue instanceof Boolean) {
-			return ((Boolean) attributeValue).equals((Boolean) anotherValue);
+			return ((Boolean) attributeValue).equals(Boolean.valueOf((String) anotherValue));
 		}
 		
 		return attributeValue.equals(anotherValue);

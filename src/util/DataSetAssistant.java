@@ -2,6 +2,7 @@ package util;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 import controller.CityController;
 import controller.Controller;
@@ -22,8 +23,17 @@ public class DataSetAssistant {
 	public void run() {
 		controller.loadCsv(path.toAbsolutePath().toString(), ",");
 		
+		@SuppressWarnings("resource")
+		final Scanner scanner = new Scanner(System.in);
+		printOptions();
+        
 		String[] params = new String[] {};
-		assist(params);
+		while (scanner.hasNextLine()) {
+        	params = scanner.nextLine().split("\\s");
+        	assist(params);
+        	printOptions();
+        }
+		
 	}
 
 	private void assist(String[] params) {
@@ -31,8 +41,6 @@ public class DataSetAssistant {
 		if (!validateParams(params)) {
 			return;
 		};
-		
-		assist(params);
 		
 		if (params[0].equalsIgnoreCase("count")) {
 			
@@ -55,8 +63,8 @@ public class DataSetAssistant {
 		}
 		
 		if (params[0].equalsIgnoreCase("filter")) {
-			final String property = params[1].toLowerCase();
-			final String value = params[2];
+			final String property = params[1].replaceAll("[\\[\\]]", "").toLowerCase();
+			final String value = params[2].replaceAll("[\\[\\]]", "").toLowerCase();
 			
 			if (property != null && value != null) {
 				final String result = controller.filterBy(property, value);
@@ -74,5 +82,11 @@ public class DataSetAssistant {
 		}
 		return true;
 	}
-
+	
+	private void printOptions() {
+		System.out.println("=================== Welcome!===================\nType \"count *\" to count all the records\n"
+				+ "Type \"count distinct [property]\" to count that distinct properties\n"
+				+ "Type \"filter [property] [value]\" to find a record.\n"
+				+ "==========================================");
+	}
 }

@@ -1,12 +1,11 @@
 package main;
 
-import application.DataSetAssistant;
+import application.Application;
 
 public class Main {
 	
 	public static void main(String[] args) {
-		new DataSetAssistant("files/cidades.csv").run();
+		new Application().run();
 	}
-
 
 }

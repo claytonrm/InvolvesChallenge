@@ -2,7 +2,6 @@ package application;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Scanner;
 
 import controller.CityController;
 import controller.Controller;
@@ -14,29 +13,15 @@ public class DataSetAssistant {
 	private static final int MAX_PARAM_NUMBER = 3;
 	
 	private Controller controller;
-	private static Path path;
+	private Path path;
 	
 	public DataSetAssistant(final String fileName) {
-		path = Paths.get("files/cidades.csv");
+		path = Paths.get(fileName);
 		controller = new CityController();
-	}
-	
-	public void run() {
-		controller.loadCsv(path.toAbsolutePath().toString(), ",");
-
-		@SuppressWarnings("resource")
-		final Scanner scanner = new Scanner(System.in);
-		Message.printOptions();
-
-		String[] params = new String[] {};
-		while (scanner.hasNextLine()) {
-			params = scanner.nextLine().split("\\s");
-			assist(params);
-			Message.printOptions();
-		}
+		controller.loadCsv(path.toAbsolutePath().toString(), Message.CSV_SEPARATOR);
 	}
 
-	private void assist(String[] params) {
+	public void assist(String[] params) {
 		
 		if (!validateParams(params)) {
 			return;
@@ -47,7 +32,7 @@ public class DataSetAssistant {
 			if (params[1].equalsIgnoreCase("*")) {
 				final long numberTotal = controller.countAll();
 				
-				System.out.println(numberTotal);
+				Message.print(String.valueOf(numberTotal));
 				return;
 			}
 			
@@ -55,25 +40,25 @@ public class DataSetAssistant {
 				final String property = params[2].replaceAll("[\\[\\]]", "").toLowerCase();
 				final long numberTotalByProperty = controller.countDistinctBy(property);
 				
-				System.out.println(numberTotalByProperty);
+				Message.print(String.valueOf(numberTotalByProperty));
 				return;
 			}
 			
-			System.err.println("Invalid param!");
+			Message.invalidParam();
 		}
 		
 		if (params[0].equalsIgnoreCase("filter")) {
 			final String property = params[1].replaceAll("[\\[\\]]", "").toLowerCase();
-			final String value = params[2].replaceAll("[\\[\\]]", "").toLowerCase();
+			final String value = params[2].replaceAll("[\\[\\]]", "");
 			
 			if (property != null && value != null) {
 				final String result = controller.filterBy(property, value);
-				System.out.println(result);
+				Message.print(result);
 			}
 			return;
 		}
-		System.err.println("Invalid param!");
 		
+		Message.invalidParam();
 	}
 
 	private boolean validateParams(final String[] params) {

@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import controller.CityController;
 import controller.Controller;
+import util.Message;
 
 public class DataSetAssistant {
 	
@@ -22,18 +23,17 @@ public class DataSetAssistant {
 	
 	public void run() {
 		controller.loadCsv(path.toAbsolutePath().toString(), ",");
-		
+
 		@SuppressWarnings("resource")
 		final Scanner scanner = new Scanner(System.in);
-		printOptions();
-        
+		Message.printOptions();
+
 		String[] params = new String[] {};
 		while (scanner.hasNextLine()) {
-        	params = scanner.nextLine().split("\\s");
-        	assist(params);
-        	printOptions();
-        }
-		
+			params = scanner.nextLine().split("\\s");
+			assist(params);
+			Message.printOptions();
+		}
 	}
 
 	private void assist(String[] params) {
@@ -83,10 +83,4 @@ public class DataSetAssistant {
 		return true;
 	}
 	
-	private void printOptions() {
-		System.out.println("=================== Welcome!===================\nType \"count *\" to count all the records\n"
-				+ "Type \"count distinct [property]\" to count that distinct properties\n"
-				+ "Type \"filter [property] [value]\" to find a record.\n"
-				+ "==========================================");
-	}
 }

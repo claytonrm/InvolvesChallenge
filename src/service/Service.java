@@ -9,7 +9,7 @@ public interface Service<T> {
 
 	Set<T> findAll();
 	
-	Set<T> findAllDistinctBy(final String[] columns);
+	Set<T> findAllDistinctBy(final String property);
 
 	long countAll();
 

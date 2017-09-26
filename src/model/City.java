@@ -20,6 +20,7 @@ public class City {
 		return ibgeId;
 	}
 
+	@CSVProperty(column = "ibge_id")
 	public void setIbgeId(final Long ibgeId) {
 		this.ibgeId = ibgeId;
 	}
@@ -29,6 +30,7 @@ public class City {
 		return uf;
 	}
 
+	@CSVProperty(column = "uf")
 	public void setUf(final String uf) {
 		this.uf = uf;
 	}
@@ -38,6 +40,7 @@ public class City {
 		return name;
 	}
 	
+	@CSVProperty(column = "name")
 	public void setName(final String name) {
 		this.name = name;
 	}
@@ -47,6 +50,7 @@ public class City {
 		return capital;
 	}
 
+	@CSVProperty(column = "capital")
 	public void setCapital(final Boolean capital) {
 		this.capital = capital;
 	}
@@ -56,6 +60,7 @@ public class City {
 		return longitude;
 	}
 
+	@CSVProperty(column = "lon")
 	public void setLongitude(final Double longitude) {
 		this.longitude = longitude;
 	}
@@ -65,6 +70,7 @@ public class City {
 		return latitude;
 	}
 
+	@CSVProperty(column = "lat")
 	public void setLatitude(final Double latitude) {
 		this.latitude = latitude;
 	}
@@ -74,6 +80,7 @@ public class City {
 		return noAccents;
 	}
 
+	@CSVProperty(column = "no_accents")
 	public void setNoAccents(final String noAccents) {
 		this.noAccents = noAccents;
 	}
@@ -83,6 +90,7 @@ public class City {
 		return alternativeNames;
 	}
 
+	@CSVProperty(column = "alternative_names")
 	public void setAlternativeNames(String alternativeNames) {
 		this.alternativeNames = alternativeNames;
 	}
@@ -92,6 +100,7 @@ public class City {
 		return microregion;
 	}
 
+	@CSVProperty(column = "microregion")
 	public void setMicroregion(final String microregion) {
 		this.microregion = microregion;
 	}
@@ -101,6 +110,7 @@ public class City {
 		return mesoregion;
 	}
 
+	@CSVProperty(column = "mesoregion")
 	public void setMesoregion(final String mesoregion) {
 		this.mesoregion = mesoregion;
 	}
@@ -110,6 +120,8 @@ public class City {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((ibgeId == null) ? 0 : ibgeId.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((uf == null) ? 0 : uf.hashCode());
 		return result;
 	}
 
@@ -127,6 +139,35 @@ public class City {
 				return false;
 		} else if (!ibgeId.equals(other.ibgeId))
 			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (uf == null) {
+			if (other.uf != null)
+				return false;
+		} else if (!uf.equals(other.uf))
+			return false;
 		return true;
 	}
+//	
+//	private Long ibgeId;
+//	private String uf;
+//	private String name;
+//	private Boolean capital;
+//	private Double longitude;
+//	private Double latitude;
+//	private String noAccents;
+//	private String alternativeNames;
+//	private String microregion;
+//	private String mesoregion;
+	
+	@Override
+	public String toString() {
+		return this.ibgeId + "," + this.uf + "," + this.name + "," + (this.capital ? "true" : "") + "," + this.longitude + ","
+				+ this.latitude + "," + this.noAccents + "," + this.alternativeNames + "," 
+				+ this.microregion + "," + this.mesoregion;
+	}
+	
 }

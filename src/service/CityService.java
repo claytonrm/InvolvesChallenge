@@ -1,6 +1,7 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -8,7 +9,7 @@ import java.util.stream.Collectors;
 import model.City;
 import repository.CityInMemoryRepository;
 import repository.Repository;
-import util.Util;
+import util.Reflection;
 
 public class CityService implements Service<City> {
 
@@ -29,8 +30,16 @@ public class CityService implements Service<City> {
 	}
 	
 	@Override
-	public Set<City> findAllDistinctBy(String[] columns) {
-		return null;
+	public Set<City> findAllDistinctBy(final String property) {
+		final Set<City> allCities = findAll();
+		final Set<City> allDistinctedCities = new HashSet<>();
+		for (City city : allCities) {
+			final City c = new City();
+			Reflection.setValueToAttribute(c, Reflection.getAttributeValue(city, property), property);
+			allDistinctedCities.add(c);
+		}
+		
+		return allDistinctedCities;
 	}
 	
 	@Override
@@ -40,7 +49,7 @@ public class CityService implements Service<City> {
 
 	@Override
 	public long countDistinctBy(final String property) {
-		return 6;
+		return findAllDistinctBy(property).size();
 	}
 	
 	@Override
@@ -48,7 +57,7 @@ public class CityService implements Service<City> {
 		final List<City> allCities = new ArrayList<>(findAll());
 		
 		return allCities.stream()
-			     .filter(item -> Util.isEqual(Util.getAttributeValue(item, property), value))
+			     .filter(item -> Reflection.isEqual(Reflection.getAttributeValue(item, property), value))
 			     .collect(Collectors.toList());
 	}
 

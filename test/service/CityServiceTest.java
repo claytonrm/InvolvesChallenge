@@ -1,4 +1,4 @@
-package test;
+package service;
 
 import java.util.HashSet;
 import java.util.List;
@@ -6,21 +6,14 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import model.City;
-import service.CityService;
-import service.Service;
 
 public class CityServiceTest {
 
 	private Service<City> service;
 	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		service = new CityService();
@@ -33,7 +26,7 @@ public class CityServiceTest {
 		service.insertAll(cities);
 		
 		Assert.assertTrue(!cities.isEmpty());
-		Assert.assertEquals(cities.size(), 4);
+		Assert.assertEquals(cities.size(), 6);
 	}
 	
 	@Test
@@ -73,7 +66,21 @@ public class CityServiceTest {
 		Assert.assertTrue(foundCities.contains(cityGravatal));
 		Assert.assertTrue(!foundCities.contains(cityFloripa));
 	}
-
+	
+	@Test
+	public void shouldReturnRecordsOnlySpecifiedColumns() {
+		service.insertAll(createAnyCities());
+		
+		final String property = "name";
+		
+		final Set<City> expectedCities = new HashSet<>();
+		expectedCities.add(createCity(null, "Palmas", null));
+		expectedCities.add(createCity(null, "Gravatal", null));
+		expectedCities.add(createCity(null, "Florianópolis", null));
+		expectedCities.add(createCity(null, "Humaitá", null));
+		
+		Assert.assertEquals(expectedCities, service.findAllDistinctBy(property));
+	}
 
 	private Set<City> createAnyCities() {
 		final Set<City> cities = new HashSet<>();
@@ -81,6 +88,9 @@ public class CityServiceTest {
 		cities.add(createCity(2L, "Palmas", "PR"));
 		cities.add(createCity(3L, "Gravatal", "SC"));
 		cities.add(createCity(4L, "Florianópolis", "SC"));
+		cities.add(createCity(5L, "Humaitá", "AM"));
+		cities.add(createCity(6L, "Humaitá", "RS"));
+		
 		return cities;
 	}
 	

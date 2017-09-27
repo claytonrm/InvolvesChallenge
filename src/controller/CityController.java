@@ -69,15 +69,13 @@ public class CityController implements Controller {
 
 	@Override
 	public String getProperty(final String property) {
-		if (property != null && property.matches(Message.PATTERN_REGEX_BETWEEN_BRACKETS)) {
-			final String cleanedProperty = property.replaceAll(Message.PATTERN_REGEX_BRACKETS, "").toLowerCase();
-			final int firstLine = 0;
-			final String[] cityProperties = fileContent.get(Message.HEADER).get(firstLine);
-			
-			for (String propertyName : cityProperties) {
-				if (propertyName.equals(cleanedProperty)) {
-					return propertyName;
-				}
+		final String cleanedProperty = property.replaceAll(Message.PATTERN_REGEX_BRACKETS, "").toLowerCase();
+		final int firstLine = 0;
+		final String[] cityProperties = fileContent.get(Message.HEADER).get(firstLine);
+		
+		for (String propertyName : cityProperties) {
+			if (propertyName.equals(cleanedProperty)) {
+				return propertyName;
 			}
 		}
 		

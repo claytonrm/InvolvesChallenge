@@ -24,7 +24,6 @@ public class DataSetAssistantTest {
 
 	private static Path path;
 	
-	private static final String HORIZONTAL_SEPARATOR = "-------------------------------------------------------------------------------------------\n";
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 	private static DataSetAssistant dataSetAssistant;
@@ -55,7 +54,7 @@ public class DataSetAssistantTest {
 
 	@Test
 	public void shouldPrintTotalRecords() {
-		final String[] params = new String[] {"count", "*"};
+		final String params = "count *";
 		
 		dataSetAssistant.assist(params);
 		
@@ -64,7 +63,7 @@ public class DataSetAssistantTest {
 	
 	@Test
 	public void shouldPrintTotalDistinctPropertyRecord() {
-		final String[] params = new String[] {"count", "distinct", "[name]"};
+		final String params = "count distinct [name]";
 		
 		dataSetAssistant.assist(params);
 		
@@ -76,74 +75,79 @@ public class DataSetAssistantTest {
 		final String[] header = createHeader().get(0);
 		final List<String[]> content = createContent();
 
-		final String[] params = new String[] {"filter", "[name]", "[Palmas]"};
+		final String params = "filter [name] [Palmas]";
 		
 		dataSetAssistant.assist(params);
-
-		final StringBuilder expected = new StringBuilder(HORIZONTAL_SEPARATOR);
-		expected.append(String.join("|", header));
-		expected.append("\n");
-		expected.append(HORIZONTAL_SEPARATOR);
-		expected.append(String.join("|", content.get(7)));
-		expected.append("\n");
-		expected.append(String.join("|", content.get(4)));
-		expected.append("\n");
 		
-		Assert.assertEquals(expected.toString() + "\n", outContent.toString());
+		final String expectedHeader = String.join("|", header);
+		final StringBuilder expectedContent = new StringBuilder();
+		expectedContent.append(String.join("|", content.get(4)));
+		expectedContent.append("\n");
+		expectedContent.append(String.join("|", content.get(7)));
+		expectedContent.append("\n");
+		
+		Assert.assertTrue(outContent.toString().contains(expectedHeader));
+		Assert.assertTrue(outContent.toString().contains(expectedContent.toString()));
 	}
 	
+	@Test
 	public void shouldFilterObjectByPropertyWithoutBrackets() {
 		final String[] header = createHeader().get(0);
 		final List<String[]> content = createContent();
 
-		final String[] params = new String[] {"filter", "[ibge_id]", "[4205407]"};
+		final String params = "filter [ibge_id] [4205407]";
 		
 		dataSetAssistant.assist(params);
-
-		final StringBuilder expected = new StringBuilder(HORIZONTAL_SEPARATOR);
-		expected.append(String.join("|", header));
-		expected.append("\n");
-		expected.append(HORIZONTAL_SEPARATOR);
-		expected.append(String.join("|", content.get(6)));
-		expected.append("\n");
 		
-		Assert.assertEquals(expected.toString() + "\n", outContent.toString());
+		final String expectedHeader = String.join("|", header);
+		final StringBuilder expectedContent = new StringBuilder();
+		expectedContent.append(String.join("|", content.get(6)));
+		expectedContent.append("\n");
+		
+		Assert.assertTrue(outContent.toString().contains(expectedHeader));
+		Assert.assertTrue(outContent.toString().contains(expectedContent.toString()));
 	}
 	
 	@Test
 	public void shouldPrintAnErrorInvalidParam() {
-		final String[] params = new String[] {"max", "*"};
+		final String params = "max *";
 		
 		dataSetAssistant.assist(params);
 		
-		Assert.assertEquals("Invalid params!\n", errContent.toString());
+		final String expected = "Invalid parameters! The expected commands are: ";
+		
+		Assert.assertTrue(errContent.toString().contains(expected));
 	}
 	
 	@Test
 	public void shouldInvalidateParamCountDistinct() {
-		final String[] params = new String[] {"count", "distinct", "[ibse_is]"};
+		final String params = "count distinct [ibse_is]";
 		
 		dataSetAssistant.assist(params);
 		
-		Assert.assertEquals("You didn't put the property between brackets or this property does not exist!\n", errContent.toString());
+		Assert.assertEquals("This property does not exist!\n", errContent.toString());
 	}
 	
 	@Test
 	public void shouldInvalidateFilter() {
-		final String[] params = new String[] {"filter", "[population]"};
+		final String params = "filter [population]";
 		
 		dataSetAssistant.assist(params);
 		
-		Assert.assertEquals("You didn't put the property between brackets or this property does not exist!\n", errContent.toString());
+		final String expected = "Invalid parameters! The expected commands are: ";
+		
+		Assert.assertTrue(errContent.toString().contains(expected));
 	}
 	
 	@Test
 	public void shouldInvalidatePropertyValueIsRequired() {
-		final String[] params = new String[] {"filter", "[microregion]"};
+		final String params = "filter [microregion]";
 		
 		dataSetAssistant.assist(params);
 		
-		Assert.assertEquals("The value must be filled between brackets!\n", errContent.toString());
+		final String expected = "Invalid parameters! The expected commands are: ";
+		
+		Assert.assertTrue(errContent.toString().contains(expected));
 	}
 	
 	@Test
@@ -151,37 +155,40 @@ public class DataSetAssistantTest {
 		final String[] header = createHeader().get(0);
 		final List<String[]> content = createContent();
 		
-		final String[] params = new String[] {"filter", "[mesoregion]", "[Sul Amazonense]"};
+		final String params = "filter [mesoregion] [Sul Amazonense]";
 		
 		dataSetAssistant.assist(params);
 		
-		final StringBuilder expected = new StringBuilder(HORIZONTAL_SEPARATOR);
-		expected.append(String.join("|", header));
-		expected.append("\n");
-		expected.append(HORIZONTAL_SEPARATOR);
-		expected.append(String.join("|", content.get(2)));
-		expected.append("\n");
+		final String expectedHeader = String.join("|", header);
+		final StringBuilder expectedContent = new StringBuilder();
+		expectedContent.append(String.join("|", content.get(2)));
+		expectedContent.append("\n");
 		
-		Assert.assertEquals(expected.toString() + "\n", outContent.toString());
+		Assert.assertTrue(outContent.toString().contains(expectedHeader));
+		Assert.assertTrue(outContent.toString().contains(expectedContent.toString()));
 	}
 	
 	@Test
 	public void shouldInvalidateExpectedBrackets() {
-		final String[] params = new String[] {"filter", "mesoregion", "[Sul Amazonense]"};
+		final String params = "filter mesoregion [Sul Amazonense]";
 		
 		dataSetAssistant.assist(params);
 		
-		Assert.assertEquals("You didn't put the property between brackets or this property does not exist!"+ "\n", errContent.toString());
+		final String expected = "Invalid parameters! The expected commands are:";
+		
+		Assert.assertTrue(errContent.toString().contains(expected));
 	}
 	
 	
 	@Test
 	public void shouldInvalidateNullParam() {
-		final String[] params = null;
+		final String params = null;
 		
 		dataSetAssistant.assist(params);
 		
-		Assert.assertEquals("Invalid params number!\n", errContent.toString());
+		final String expected = "Invalid parameters! The expected commands are: ";
+		
+		Assert.assertTrue(errContent.toString().contains(expected));
 	}
 	
 	private static List<String[]> createHeader() {

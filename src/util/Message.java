@@ -12,7 +12,6 @@ public class Message {
 	public static final String PATTERN_REGEX_BETWEEN_BRACKETS = "\\[.+\\]";
 	public static final String PATTERN_REGEX_BRACKETS = "[\\[\\]]";
 	public static final String NEW_LINE = "\n";
-	public static final String PATTERN_REGEX_SPACES = "\\s+";
 	public static final String HORIZONTAL_SEPARATOR = "-------------------------------------------------------------------------------------------\n";
 	
 	public static void printOptions() {

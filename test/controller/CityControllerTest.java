@@ -73,9 +73,9 @@ public class CityControllerTest {
 		expected.append(String.join("|", header));
 		expected.append("\n");
 		expected.append(HORIZONTAL_SEPARATOR);
-		expected.append(String.join("|", content.get(7)));
-		expected.append("\n");
 		expected.append(String.join("|", content.get(4)));
+		expected.append("\n");
+		expected.append(String.join("|", content.get(7)));
 		expected.append("\n");
 		
 		Assert.assertEquals(expected.toString(), out);

@@ -2,17 +2,16 @@ package application;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import controller.CityController;
 import controller.Controller;
-import enums.Param;
+import enums.ParamCommand;
 import util.Message;
 
 public class DataSetAssistant {
-	
-	private static final int MIN_PARAM_NUMBER = 2;
-	private static final int MAX_PARAM_NUMBER = 3;
-	
+
 	private Controller controller;
 	private Path path;
 	
@@ -22,65 +21,62 @@ public class DataSetAssistant {
 		controller.loadCsv(path.toAbsolutePath().toString(), Message.CSV_SEPARATOR);
 	}
 
-	public void assist(final String[] params) {
+	public void assist(final String params) {
 		
-		if (!validateParamsNumber(params)) {
-			Message.printError("Invalid params number!");
+		final ParamCommand commandParam = ParamCommand.get(params);
+		
+		if (commandParam == null) {
+			Message.printError("Invalid parameters! The expected commands are: " + ParamCommand.showAllCommandSintax());
 			return;
 		}
 		
-		final Param paramFilter = Param.get(new String[] {params[0].toLowerCase()});
-		final Param inputParam = paramFilter != null ? paramFilter : Param.get(new String[] {params[0].toLowerCase(), params[1].toLowerCase()});
-		
-		executeParams(params, inputParam);
+		executeParams(commandParam, params);
 	}
 
-	private void executeParams(final String[] params, final Param inputParam) {
+	private void executeParams(final ParamCommand paramCommand, final String params) {
+		final Pattern pattern = Pattern.compile(paramCommand.getRegexPattern());
+		final Matcher matcher = pattern.matcher(params);
 		
-		if (Param.COUNT_ALL.equals(inputParam)) {
+		if (!matcher.matches()) {
+			Message.print("The following pattern wasn't idenfitied:\n" + matcher.toString());
+			return;
+		}
+		
+		if (ParamCommand.COUNT_ALL.equals(paramCommand)) {
 			final long numberTotal = controller.countAll();
 			Message.print(String.valueOf(numberTotal));
 			return;
 		}
 		
-		if (Param.COUNT_DISTINCT.equals(inputParam)) {
-			final String propertyName = controller.getProperty(params[2]);
-			
-			if (propertyName == null) {
-				Message.printError("You didn't put the property between brackets or this property does not exist!");
-				return;
-			}
-
-			final long totalByDistinctProperty = controller.countDistinctBy(propertyName);
-			Message.print(String.valueOf(totalByDistinctProperty));
-			return;
+		if (ParamCommand.COUNT_DISTINCT.equals(paramCommand)) {
+		    final String propertyName = controller.getProperty(matcher.group(1));
+		    
+		    if (propertyName == null) {
+		    	Message.printError("This property does not exist!");
+		    	return;
+		    }
+		    
+		    final long totalByDistinctProperty = controller.countDistinctBy(propertyName);
+		    Message.print(String.valueOf(totalByDistinctProperty));
+		    return;
 		}
 		
-		if (Param.FILTER.equals(inputParam)) {
-			final String propertyName = controller.getProperty(params[1]);
-			final String propertyValue = params.length == MAX_PARAM_NUMBER ? params[2] : null;
-
+		if (ParamCommand.FILTER.equals(paramCommand)) {
+			final String propertyName = controller.getProperty(matcher.group(1));
+			final String propertyValue = matcher.group(2);
+			
 			if (propertyName == null) {
-				Message.printError("You didn't put the property between brackets or this property does not exist!");
+				Message.printError("This property does not exist!");
 				return;
 			}
 			
-			if (propertyValue != null && propertyValue.matches(Message.PATTERN_REGEX_BETWEEN_BRACKETS)) {
-				final String cleanedValue = propertyValue.replaceAll(Message.PATTERN_REGEX_BRACKETS, "");
-				final String result = controller.filterBy(propertyName, cleanedValue);
-				Message.print(result);
-			} else {
-				Message.printError("The value must be filled between brackets!");
-			}
+			final String cleanedValue = propertyValue.replaceAll(Message.PATTERN_REGEX_BRACKETS, "");
+			final String result = controller.filterBy(propertyName, cleanedValue);
+			Message.print(result);
 			return;
 		}
 		
 		Message.printError("Invalid params!");
-	}
-
-	private boolean validateParamsNumber(final String[] params) {
-		return params != null && (params.length == MIN_PARAM_NUMBER || 
-				params.length == MAX_PARAM_NUMBER); 
 	}
 	
 }

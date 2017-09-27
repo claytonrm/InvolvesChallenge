@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import util.Message;
 import util.Writer;
 
 public class DataSetAssistantTest {
@@ -31,8 +32,8 @@ public class DataSetAssistantTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		final Map<String, List<String[]>> fileContent = new HashMap<>();
-		fileContent.put("header", createHeader());
-		fileContent.put("content", createContent());
+		fileContent.put(Message.HEADER, createHeader());
+		fileContent.put(Message.CONTENT, createContent());
 		
 		path = Paths.get("files/test.csv");
 		

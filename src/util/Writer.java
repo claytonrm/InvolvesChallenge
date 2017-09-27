@@ -7,6 +7,11 @@ import java.util.Map;
 
 public class Writer {
 
+	/**
+	 * @param fileName - The entire path of the file.
+	 * @param fileContent - A Map<String, List<String[]> which contains a key \"header\" and \"content\" and value are columns
+	 * from csv file.
+	 */
 	public static void createCsvFile(final String fileName, final Map<String, List<String[]>> fileContent) {
 		try (FileWriter writer = new FileWriter(fileName)) {
 			final List<String[]> header = fileContent.get("header");
@@ -18,13 +23,13 @@ public class Writer {
 			writeColumns(writer, content);
 
 		} catch (IOException e) {
-			System.err.println(e.getStackTrace());
+			Message.printError(e.getMessage());
 		}
 	}
 
 	private static void writeColumns(final FileWriter writer, final List<String[]> record) throws IOException {
 		if (record == null) {
-			System.err.println("There's no content to write.");
+			Message.printError("There's no content to write.");
 			return;
 		}
 		

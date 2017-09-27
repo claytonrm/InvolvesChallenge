@@ -14,7 +14,7 @@ public class Reflection {
 			return methodTypeGet.invoke(o);
 			
 		} catch (IllegalAccessException | InvocationTargetException e) {
-			System.out.println(e.getMessage());
+			Message.printError(e.getMessage());
 		}
 		return null;
 	}
@@ -38,7 +38,7 @@ public class Reflection {
 			final Method methodTypeGet = getMethodByPropertyName(o, attribute, 1);
 			methodTypeGet.invoke(o, value);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			System.err.println(e.getMessage());
+			Message.printError(e.getMessage());
 		}
 	}
 	

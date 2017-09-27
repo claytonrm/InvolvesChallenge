@@ -8,6 +8,7 @@ import java.util.Set;
 import model.City;
 import service.CityService;
 import service.Service;
+import util.Message;
 import util.Reader;
 
 public class CityController implements Controller {
@@ -62,13 +63,13 @@ public class CityController implements Controller {
 			return null;
 		}
 		
-		final String header = String.join(",", fileContent.get("header").get(0));
+		final String header = String.join(",", fileContent.get(Message.HEADER).get(0));
 		final StringBuilder sb = new StringBuilder(header);
 		
-		sb.append("\n");
+		sb.append(Message.NEW_LINE);
 		for (City city : cities) {
 			sb.append(city);
-			sb.append("\n");
+			sb.append(Message.NEW_LINE);
 		}
 		return sb.toString();
 	}
@@ -76,9 +77,9 @@ public class CityController implements Controller {
 	@Override
 	public String getProperty(final String property) {
 		if (property != null) {
-			final String cleanedProperty = property.replaceAll("[\\[\\]]", "").toLowerCase();
+			final String cleanedProperty = property.replaceAll(Message.PATTERN_REGEX_BRACKETS, "").toLowerCase();
 			final int firstLine = 0;
-			final String[] cityProperties = fileContent.get("header").get(firstLine);
+			final String[] cityProperties = fileContent.get(Message.HEADER).get(firstLine);
 			
 			for (String propertyName : cityProperties) {
 				if (propertyName.equals(cleanedProperty)) {

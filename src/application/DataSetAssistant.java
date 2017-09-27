@@ -56,7 +56,7 @@ public class DataSetAssistant {
 			final String propertyValue = params[2];
 
 			if (propertyName != null) {
-				final String cleanedValue = propertyValue.replaceAll("[\\[\\]]", "");
+				final String cleanedValue = propertyValue.replaceAll(Message.PATTERN_REGEX_BRACKETS, "");
 				final String result = controller.filterBy(propertyName, cleanedValue);
 				Message.print(result);
 			}

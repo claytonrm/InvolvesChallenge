@@ -45,7 +45,7 @@ public class Reader {
 			
 			fullContent.put(CONTENT, content);
 		} catch (IOException e) {
-			System.err.println("Cannot read this file \"%s\".");
+			Message.printError("Cannot read this file \"%s\".");
 		}
 
 		return fullContent;
@@ -54,7 +54,7 @@ public class Reader {
 	/**
 	 * @param fileName - The entire path of the file.
 	 * @param separator - The separator to separate in columns.
-	 * @return A Map<String, List<String[]> which key is header and content and value is the columns
+	 * @return A Map<String, List<String[]> which contains a key \"header\" and \"content\" and value are columns
 	 * from csv file.
 	 */
 	public static Map<String, List<String[]>> readCsv(final String fileName, final String separator) {

@@ -151,17 +151,6 @@ public class City {
 			return false;
 		return true;
 	}
-//	
-//	private Long ibgeId;
-//	private String uf;
-//	private String name;
-//	private Boolean capital;
-//	private Double longitude;
-//	private Double latitude;
-//	private String noAccents;
-//	private String alternativeNames;
-//	private String microregion;
-//	private String mesoregion;
 	
 	@Override
 	public String toString() {

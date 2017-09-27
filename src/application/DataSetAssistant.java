@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 
 import controller.CityController;
 import controller.Controller;
+import enums.Param;
 import util.Message;
 
 public class DataSetAssistant {
@@ -21,51 +22,55 @@ public class DataSetAssistant {
 		controller.loadCsv(path.toAbsolutePath().toString(), Message.CSV_SEPARATOR);
 	}
 
-	public void assist(String[] params) {
+	public void assist(final String[] params) {
 		
-		if (!validateParams(params)) {
+		if (!validateParamsNumber(params)) {
+			Message.printError("Invalid params number!");
 			return;
 		};
 		
-		if (params[0].equalsIgnoreCase("count")) {
-			
-			if (params[1].equalsIgnoreCase("*")) {
-				final long numberTotal = controller.countAll();
-				
-				Message.print(String.valueOf(numberTotal));
-				return;
-			}
-			
-			if (params[1].equalsIgnoreCase("distinct")) {
-				final String property = params[2].replaceAll("[\\[\\]]", "").toLowerCase();
-				final long numberTotalByProperty = controller.countDistinctBy(property);
-				
-				Message.print(String.valueOf(numberTotalByProperty));
-				return;
-			}
-			
-			Message.invalidParam();
-		}
+		final Param paramFilter = Param.get(new String[] {params[0].toLowerCase()});
+		final Param inputParam = paramFilter != null ? paramFilter : Param.get(new String[] {params[0].toLowerCase(), params[1].toLowerCase()});
 		
-		if (params[0].equalsIgnoreCase("filter")) {
-			final String property = params[1].replaceAll("[\\[\\]]", "").toLowerCase();
-			final String value = params[2].replaceAll("[\\[\\]]", "");
-			
-			if (property != null && value != null) {
-				final String result = controller.filterBy(property, value);
-				Message.print(result);
-			}
+		if (Param.COUNT_ALL.equals(inputParam)) {
+			final long numberTotal = controller.countAll();
+			Message.print(String.valueOf(numberTotal));
 			return;
 		}
 		
-		Message.invalidParam();
+		if (Param.COUNT_DISTINCT.equals(inputParam)) {
+			final String propertyName = controller.getProperty(params[2]);
+			
+			if (propertyName == null) {
+				Message.printError("This property does not exist!");
+				return;
+			}
+
+			final long totalByDistinctProperty = controller.countDistinctBy(propertyName);
+			Message.print(String.valueOf(totalByDistinctProperty));
+			return;
+		}
+		
+		if (Param.FILTER.equals(inputParam)) {
+			final String propertyName = controller.getProperty(params[1]);
+			final String propertyValue = params[2];
+
+			if (propertyName != null) {
+				final String cleanedValue = propertyValue.replaceAll("[\\[\\]]", "");
+				final String result = controller.filterBy(propertyName, cleanedValue);
+				Message.print(result);
+			}
+			
+			Message.printError("This property does not exist!");
+			return;
+		}
+		
+		Message.printError("Invalid params!");
 	}
 
-	private boolean validateParams(final String[] params) {
-		if (params.length != MIN_PARAM_NUMBER && params.length != MAX_PARAM_NUMBER) {
-			return false;
-		}
-		return true;
+	private boolean validateParamsNumber(final String[] params) {
+		return params != null && (params.length == MIN_PARAM_NUMBER || 
+				params.length == MAX_PARAM_NUMBER); 
 	}
 	
 }

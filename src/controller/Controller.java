@@ -10,4 +10,6 @@ public interface Controller {
 	
 	String filterBy(final String property, final Object value);
 	
+	String getProperty(final String propertyName);
+	
 }

@@ -89,13 +89,56 @@ public class DataSetAssistantTest {
 		Assert.assertEquals(expected.toString() + "\n", outContent.toString());
 	}
 	
+	public void shouldFilterObjectByPropertyWithoutBrackets() {
+		final String[] header = createHeader().get(0);
+		final List<String[]> content = createContent();
+
+		final String[] params = new String[] {"filter", "ibge_id", "4205407"};
+		
+		dataSetAssistant.assist(params);
+
+		final StringBuilder expected = new StringBuilder(String.join(",", header));
+		expected.append("\n");
+		expected.append(String.join(",", content.get(6)));
+		expected.append("\n");
+		
+		Assert.assertEquals(expected.toString() + "\n", outContent.toString());
+	}
+	
 	@Test
 	public void shouldPrintAnErrorInvalidParam() {
 		final String[] params = new String[] {"max", "*"};
 		
 		dataSetAssistant.assist(params);
 		
-		Assert.assertEquals("Invalid param!\n", errContent.toString());
+		Assert.assertEquals("Invalid params!\n", errContent.toString());
+	}
+	
+	@Test
+	public void shouldInvalidateParamCountDistinct() {
+		final String[] params = new String[] {"count", "distinct", "[ibse_is]"};
+		
+		dataSetAssistant.assist(params);
+		
+		Assert.assertEquals("This property does not exist!\n", errContent.toString());
+	}
+	
+	@Test
+	public void shouldInvalidFilter() {
+		final String[] params = new String[] {"filter", "population", null};
+		
+		dataSetAssistant.assist(params);
+		
+		Assert.assertEquals("This property does not exist!\n", errContent.toString());
+	}
+	
+	@Test
+	public void shouldInvalidateNullParam() {
+		final String[] params = null;
+		
+		dataSetAssistant.assist(params);
+		
+		Assert.assertEquals("Invalid params number!\n", errContent.toString());
 	}
 	
 	private static List<String[]> createHeader() {

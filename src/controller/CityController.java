@@ -72,5 +72,22 @@ public class CityController implements Controller {
 		}
 		return sb.toString();
 	}
+	
+	@Override
+	public String getProperty(final String property) {
+		if (property != null) {
+			final String cleanedProperty = property.replaceAll("[\\[\\]]", "").toLowerCase();
+			final int firstLine = 0;
+			final String[] cityProperties = fileContent.get("header").get(firstLine);
+			
+			for (String propertyName : cityProperties) {
+				if (propertyName.equals(cleanedProperty)) {
+					return propertyName;
+				}
+			}
+		}
+		
+		return null;
+	}
 
 }

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import model.City;
 import repository.CityInMemoryRepository;
 import repository.Repository;
-import util.Reflection;
+import util.PropertyUtil;
 
 public class CityService implements Service<City> {
 
@@ -35,7 +35,7 @@ public class CityService implements Service<City> {
 		final Set<City> allDistinctedCities = new HashSet<>();
 		for (City city : allCities) {
 			final City c = new City();
-			Reflection.setValueToAttribute(c, Reflection.getAttributeValue(city, property), property);
+			PropertyUtil.setValueToAttribute(c, PropertyUtil.getAttributeValue(city, property), property);
 			allDistinctedCities.add(c);
 		}
 		
@@ -43,21 +43,11 @@ public class CityService implements Service<City> {
 	}
 	
 	@Override
-	public long countAll() {
-		return findAll().size();
-	}
-
-	@Override
-	public long countDistinctBy(final String property) {
-		return findAllDistinctBy(property).size();
-	}
-	
-	@Override
 	public List<City> filterBy(final String property, final Object value) {
 		final List<City> allCities = new ArrayList<>(findAll());
 		
 		return allCities.stream()
-			     .filter(item -> Reflection.isEqual(Reflection.getAttributeValue(item, property), value))
+			     .filter(item -> PropertyUtil.isEqual(PropertyUtil.getAttributeValue(item, property), value))
 			     .collect(Collectors.toList());
 	}
 

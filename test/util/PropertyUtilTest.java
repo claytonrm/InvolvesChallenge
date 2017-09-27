@@ -1,33 +1,12 @@
 package util;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import annotation.CSVProperty;
 
-public class ReflectionTest {
+public class PropertyUtilTest {
 	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	@Test
 	public void shouldReturnObjectAsPropertyType() {
 		final TestProperty testProperty = new TestProperty();
@@ -36,10 +15,10 @@ public class ReflectionTest {
 		testProperty.setBooleanProperty(true);
 		testProperty.setStringProperty("test");
 		
-		final Object objectLong = Reflection.getAttributeValue(testProperty, "long_property");
-		final Object objectDouble = Reflection.getAttributeValue(testProperty, "double_property");
-		final Object objectBoolean = Reflection.getAttributeValue(testProperty, "boolean_property");
-		final Object objectString = Reflection.getAttributeValue(testProperty, "string_property");
+		final Object objectLong = PropertyUtil.getAttributeValue(testProperty, "long_property");
+		final Object objectDouble = PropertyUtil.getAttributeValue(testProperty, "double_property");
+		final Object objectBoolean = PropertyUtil.getAttributeValue(testProperty, "boolean_property");
+		final Object objectString = PropertyUtil.getAttributeValue(testProperty, "string_property");
 		
 		Assert.assertTrue(objectLong instanceof Long);
 		Assert.assertTrue(objectDouble instanceof Double);
@@ -51,7 +30,7 @@ public class ReflectionTest {
 	public void shouldSetALongValueIntoTheProperty() {
 		final TestProperty testProperty = new TestProperty();
 		
-		Reflection.setValueToAttribute(testProperty, 1L, "long_property");
+		PropertyUtil.setValueToAttribute(testProperty, 1L, "long_property");
 		
 		Assert.assertTrue(testProperty.getLongProperty().equals(1L));
 	}
@@ -60,7 +39,7 @@ public class ReflectionTest {
 	public void shouldSetABooleanValueIntoTheProperty() {
 		final TestProperty testProperty = new TestProperty();
 		
-		Reflection.setValueToAttribute(testProperty, true, "boolean_property");
+		PropertyUtil.setValueToAttribute(testProperty, true, "boolean_property");
 		
 		Assert.assertEquals(true, testProperty.getBooleanProperty());
 	}
@@ -69,7 +48,7 @@ public class ReflectionTest {
 	public void shouldSetADoubleValueIntoTheProperty() {
 		final TestProperty testProperty = new TestProperty();
 		
-		Reflection.setValueToAttribute(testProperty, 5.0, "double_property");
+		PropertyUtil.setValueToAttribute(testProperty, 5.0, "double_property");
 		
 		Assert.assertTrue(testProperty.getDoubleProperty().equals(5.0));
 	}
@@ -78,7 +57,7 @@ public class ReflectionTest {
 	public void shouldSetAStringValueIntoTheProperty() {
 		final TestProperty testProperty = new TestProperty();
 		
-		Reflection.setValueToAttribute(testProperty, "do it", "string_property");
+		PropertyUtil.setValueToAttribute(testProperty, "do it", "string_property");
 		
 		Assert.assertEquals("do it", testProperty.getStringProperty());
 	}

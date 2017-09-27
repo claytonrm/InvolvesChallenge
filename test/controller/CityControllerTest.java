@@ -21,6 +21,7 @@ public class CityControllerTest {
 
 	private static Path path;
 	private static final String FILE_NAME = "files/test.csv";
+	private static final String HORIZONTAL_SEPARATOR = "-------------------------------------------------------------------------------------------\n";
 	
 	private Controller controller;
 	
@@ -68,11 +69,13 @@ public class CityControllerTest {
 
 		final String out = controller.filterBy("name", "Palmas");
 		
-		final StringBuilder expected = new StringBuilder(String.join(",", header));
+		final StringBuilder expected = new StringBuilder(HORIZONTAL_SEPARATOR);
+		expected.append(String.join("|", header));
 		expected.append("\n");
-		expected.append(String.join(",", content.get(7)));
+		expected.append(HORIZONTAL_SEPARATOR);
+		expected.append(String.join("|", content.get(7)));
 		expected.append("\n");
-		expected.append(String.join(",", content.get(4)));
+		expected.append(String.join("|", content.get(4)));
 		expected.append("\n");
 		
 		Assert.assertEquals(expected.toString(), out);

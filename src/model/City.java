@@ -154,9 +154,9 @@ public class City {
 	
 	@Override
 	public String toString() {
-		return this.ibgeId + "," + this.uf + "," + this.name + "," + (this.capital ? "true" : "") + "," + this.longitude + ","
-				+ this.latitude + "," + this.noAccents + "," + this.alternativeNames + "," 
-				+ this.microregion + "," + this.mesoregion;
+		return this.ibgeId + "|" + this.uf + "|" + this.name + "|" + (this.capital ? "true" : "") + "|" + this.longitude + "|"
+				+ this.latitude + "|" + this.noAccents + "|" + this.alternativeNames + "|" 
+				+ this.microregion + "|" + this.mesoregion;
 	}
 	
 }

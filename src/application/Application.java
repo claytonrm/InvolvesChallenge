@@ -14,7 +14,7 @@ public class Application {
 		try (final Scanner scanner = new Scanner(System.in)) {
 			Message.printOptions();
 			while (scanner.hasNextLine()) {
-				final String[] params = scanner.nextLine().split("\\s");
+				final String[] params = scanner.nextLine().split(Message.PATTERN_REGEX_SPACES);
 				dataSetAssistant.assist(params);
 				Message.printOptions();
 			}

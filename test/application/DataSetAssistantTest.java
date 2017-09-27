@@ -24,9 +24,9 @@ public class DataSetAssistantTest {
 
 	private static Path path;
 	
+	private static final String HORIZONTAL_SEPARATOR = "-------------------------------------------------------------------------------------------\n";
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-
 	private static DataSetAssistant dataSetAssistant;
 	
 	@BeforeClass
@@ -80,11 +80,13 @@ public class DataSetAssistantTest {
 		
 		dataSetAssistant.assist(params);
 
-		final StringBuilder expected = new StringBuilder(String.join(",", header));
+		final StringBuilder expected = new StringBuilder(HORIZONTAL_SEPARATOR);
+		expected.append(String.join("|", header));
 		expected.append("\n");
-		expected.append(String.join(",", content.get(7)));
+		expected.append(HORIZONTAL_SEPARATOR);
+		expected.append(String.join("|", content.get(7)));
 		expected.append("\n");
-		expected.append(String.join(",", content.get(4)));
+		expected.append(String.join("|", content.get(4)));
 		expected.append("\n");
 		
 		Assert.assertEquals(expected.toString() + "\n", outContent.toString());
@@ -94,13 +96,15 @@ public class DataSetAssistantTest {
 		final String[] header = createHeader().get(0);
 		final List<String[]> content = createContent();
 
-		final String[] params = new String[] {"filter", "ibge_id", "4205407"};
+		final String[] params = new String[] {"filter", "[ibge_id]", "[4205407]"};
 		
 		dataSetAssistant.assist(params);
 
-		final StringBuilder expected = new StringBuilder(String.join(",", header));
+		final StringBuilder expected = new StringBuilder(HORIZONTAL_SEPARATOR);
+		expected.append(String.join("|", header));
 		expected.append("\n");
-		expected.append(String.join(",", content.get(6)));
+		expected.append(HORIZONTAL_SEPARATOR);
+		expected.append(String.join("|", content.get(6)));
 		expected.append("\n");
 		
 		Assert.assertEquals(expected.toString() + "\n", outContent.toString());
@@ -121,17 +125,55 @@ public class DataSetAssistantTest {
 		
 		dataSetAssistant.assist(params);
 		
-		Assert.assertEquals("This property does not exist!\n", errContent.toString());
+		Assert.assertEquals("You didn't put the property between brackets or this property does not exist!\n", errContent.toString());
 	}
 	
 	@Test
-	public void shouldInvalidFilter() {
-		final String[] params = new String[] {"filter", "population", null};
+	public void shouldInvalidateFilter() {
+		final String[] params = new String[] {"filter", "[population]"};
 		
 		dataSetAssistant.assist(params);
 		
-		Assert.assertEquals("This property does not exist!\n", errContent.toString());
+		Assert.assertEquals("You didn't put the property between brackets or this property does not exist!\n", errContent.toString());
 	}
+	
+	@Test
+	public void shouldInvalidatePropertyValueIsRequired() {
+		final String[] params = new String[] {"filter", "[microregion]"};
+		
+		dataSetAssistant.assist(params);
+		
+		Assert.assertEquals("The value must be filled between brackets!\n", errContent.toString());
+	}
+	
+	@Test
+	public void shouldFilterByStringWhichContainsWhiteSpaces() {
+		final String[] header = createHeader().get(0);
+		final List<String[]> content = createContent();
+		
+		final String[] params = new String[] {"filter", "[mesoregion]", "[Sul Amazonense]"};
+		
+		dataSetAssistant.assist(params);
+		
+		final StringBuilder expected = new StringBuilder(HORIZONTAL_SEPARATOR);
+		expected.append(String.join("|", header));
+		expected.append("\n");
+		expected.append(HORIZONTAL_SEPARATOR);
+		expected.append(String.join("|", content.get(2)));
+		expected.append("\n");
+		
+		Assert.assertEquals(expected.toString() + "\n", outContent.toString());
+	}
+	
+	@Test
+	public void shouldInvalidateExpectedBrackets() {
+		final String[] params = new String[] {"filter", "mesoregion", "[Sul Amazonense]"};
+		
+		dataSetAssistant.assist(params);
+		
+		Assert.assertEquals("You didn't put the property between brackets or this property does not exist!"+ "\n", errContent.toString());
+	}
+	
 	
 	@Test
 	public void shouldInvalidateNullParam() {

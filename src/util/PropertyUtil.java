@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 
 import annotation.CSVProperty;
 
-public class Reflection {
+public class PropertyUtil {
 	
 	public static Object getAttributeValue(final Object o, final String property) {
 		try {
@@ -47,16 +47,18 @@ public class Reflection {
 			return false;
 		}
 		
-		if (attributeValue instanceof Long) {
-			return ((Long) attributeValue).equals((Long) anotherValue);
-		}
-
-		if (attributeValue instanceof Double) {
-			return ((Double) attributeValue).equals((Double) anotherValue);
-		}
-		
-		if (attributeValue instanceof Boolean) {
-			return ((Boolean) attributeValue).equals(Boolean.valueOf((String) anotherValue));
+		if (anotherValue instanceof String) {
+			if (attributeValue instanceof Long) {
+				return ((Long) attributeValue).equals(Long.valueOf((String) anotherValue));
+			}
+			
+			if (attributeValue instanceof Double) {
+				return ((Double) attributeValue).equals(Double.valueOf((String) anotherValue));
+			}
+			
+			if (attributeValue instanceof Boolean) {
+				return ((Boolean) attributeValue).equals(Boolean.valueOf((String) anotherValue));
+			}
 		}
 		
 		return attributeValue.equals(anotherValue);

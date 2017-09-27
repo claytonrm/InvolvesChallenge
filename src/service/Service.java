@@ -11,10 +11,6 @@ public interface Service<T> {
 	
 	Set<T> findAllDistinctBy(final String property);
 
-	long countAll();
-
-	long countDistinctBy(final String property);
-	
 	List<T> filterBy(final String property, final Object value);
 
 }

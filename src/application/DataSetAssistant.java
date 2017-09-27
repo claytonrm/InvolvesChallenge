@@ -27,10 +27,15 @@ public class DataSetAssistant {
 		if (!validateParamsNumber(params)) {
 			Message.printError("Invalid params number!");
 			return;
-		};
+		}
 		
 		final Param paramFilter = Param.get(new String[] {params[0].toLowerCase()});
 		final Param inputParam = paramFilter != null ? paramFilter : Param.get(new String[] {params[0].toLowerCase(), params[1].toLowerCase()});
+		
+		executeParams(params, inputParam);
+	}
+
+	private void executeParams(final String[] params, final Param inputParam) {
 		
 		if (Param.COUNT_ALL.equals(inputParam)) {
 			final long numberTotal = controller.countAll();
@@ -42,7 +47,7 @@ public class DataSetAssistant {
 			final String propertyName = controller.getProperty(params[2]);
 			
 			if (propertyName == null) {
-				Message.printError("This property does not exist!");
+				Message.printError("You didn't put the property between brackets or this property does not exist!");
 				return;
 			}
 
@@ -53,15 +58,20 @@ public class DataSetAssistant {
 		
 		if (Param.FILTER.equals(inputParam)) {
 			final String propertyName = controller.getProperty(params[1]);
-			final String propertyValue = params[2];
+			final String propertyValue = params.length == MAX_PARAM_NUMBER ? params[2] : null;
 
-			if (propertyName != null) {
+			if (propertyName == null) {
+				Message.printError("You didn't put the property between brackets or this property does not exist!");
+				return;
+			}
+			
+			if (propertyValue != null && propertyValue.matches(Message.PATTERN_REGEX_BETWEEN_BRACKETS)) {
 				final String cleanedValue = propertyValue.replaceAll(Message.PATTERN_REGEX_BRACKETS, "");
 				final String result = controller.filterBy(propertyName, cleanedValue);
 				Message.print(result);
+			} else {
+				Message.printError("The value must be filled between brackets!");
 			}
-			
-			Message.printError("This property does not exist!");
 			return;
 		}
 		

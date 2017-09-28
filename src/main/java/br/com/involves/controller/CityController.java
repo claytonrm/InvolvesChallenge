@@ -8,18 +8,15 @@ import java.util.Set;
 import br.com.involves.model.City;
 import br.com.involves.service.CityService;
 import br.com.involves.service.Service;
+import br.com.involves.util.Constants;
 import br.com.involves.util.Message;
 import br.com.involves.util.Reader;
 
 public class CityController implements Controller {
 
-	private Service<City> service;
+	private final Service<City> service = new CityService();
 	
 	private Map<String, List<String[]>> fileContent;
-	
-	public CityController() {
-		service = new CityService();
-	}
 	
 	@Override
 	public void loadCsv(final String fileName, final String separador) {
@@ -58,7 +55,7 @@ public class CityController implements Controller {
 
 	@Override
 	public String filterBy(final String property, final Object value) {
-		final StringBuilder sb = new StringBuilder(Message.HORIZONTAL_SEPARATOR);
+		final StringBuilder sb = new StringBuilder(Constants.HORIZONTAL_SEPARATOR);
 		try {
 			createOutput(sb, service.filterBy(property, value));
 		} catch (NumberFormatException e) {
@@ -69,9 +66,9 @@ public class CityController implements Controller {
 
 	@Override
 	public String getProperty(final String property) {
-		final String cleanedProperty = property.replaceAll(Message.PATTERN_REGEX_BRACKETS, "").toLowerCase();
+		final String cleanedProperty = property.replaceAll(Constants.PATTERN_REGEX_BRACKETS, "").toLowerCase();
 		final int firstLine = 0;
-		final String[] cityProperties = fileContent.get(Message.HEADER).get(firstLine);
+		final String[] cityProperties = fileContent.get(Constants.HEADER).get(firstLine);
 		
 		for (String propertyName : cityProperties) {
 			if (propertyName.equals(cleanedProperty)) {
@@ -83,13 +80,13 @@ public class CityController implements Controller {
 	}
 	
 	private void createOutput(final StringBuilder sb, final List<City> cities) {
-		final String header = String.join("|", fileContent.get(Message.HEADER).get(0));
+		final String header = String.join("|", fileContent.get(Constants.HEADER).get(0));
 		sb.append(header);
-		sb.append(Message.NEW_LINE);
-		sb.append(Message.HORIZONTAL_SEPARATOR);
+		sb.append(Constants.NEW_LINE);
+		sb.append(Constants.HORIZONTAL_SEPARATOR);
 		for (City city : cities) {
 			sb.append(city);
-			sb.append(Message.NEW_LINE);
+			sb.append(Constants.NEW_LINE);
 		}
 	}
 }

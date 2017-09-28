@@ -1,8 +1,10 @@
 package br.com.involves.util;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import br.com.involves.annotation.CSVProperty;
 
@@ -10,23 +12,20 @@ public class PropertyUtil {
 	
 	public static Object getAttributeValue(final Object o, final String property) {
 		try {
-			final Method methodTypeGet = getMethodByPropertyName(o, property, 0);
-			return methodTypeGet.invoke(o);
-			
-		} catch (IllegalAccessException | InvocationTargetException e) {
+			return new PropertyDescriptor(getFieldByPropertyName(o, property).getName(), o.getClass()).getReadMethod().invoke(o);
+		} catch (IllegalAccessException | InvocationTargetException 
+				| IllegalArgumentException | IntrospectionException e) {
 			Message.printError(e.getMessage());
 		}
 		return null;
 	}
 	
-	public static Method getMethodByPropertyName(final Object o, final String property, final int paramNumber) {
-		final Method[] methods = o.getClass().getDeclaredMethods();
-		for (Method method : methods) {
-			if (method.isAnnotationPresent(CSVProperty.class) && method.getParameterCount() == paramNumber) {
-				for (Annotation annotation : method.getAnnotations()) {
-					if (property.equals(((CSVProperty) annotation).column())) {
-						return method;
-					}
+	private static Field getFieldByPropertyName(final Object o, final String propertyName) {
+		final Field[] fields = o.getClass().getDeclaredFields();
+		for (Field field : fields) {
+			for (Annotation annotation : field.getAnnotations()) {
+				if (propertyName.equals(((CSVProperty) annotation).column())) {
+					return field;
 				}
 			}
 		}
@@ -35,9 +34,9 @@ public class PropertyUtil {
 	
 	public static void setValueToAttribute(final Object o, final Object value, final String attribute) {
 		try {
-			final Method methodTypeGet = getMethodByPropertyName(o, attribute, 1);
-			methodTypeGet.invoke(o, value);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			new PropertyDescriptor(getFieldByPropertyName(o, attribute).getName(), o.getClass()).getWriteMethod().invoke(o, value);
+		} catch (IllegalArgumentException | InvocationTargetException 
+				| IntrospectionException | IllegalAccessException e) {
 			Message.printError(e.getMessage());
 		}
 	}

@@ -39,7 +39,7 @@ public class WriterTest {
 	}
 
 	@Test
-	public void shouldCreateACsvFile() throws IOException {
+	public void shouldCreateANonEmptyCsvFile() throws IOException {
 		final Map<String, List<String[]>> fileContent = new HashMap<>();
 		fileContent.put("header", createHeader());
 		fileContent.put("content", createContent());

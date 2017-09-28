@@ -4,113 +4,112 @@ import br.com.involves.annotation.CSVProperty;
 
 public class City {
 
+	@CSVProperty(column = "ibge_id")
 	private Long ibgeId;
+
+	@CSVProperty(column = "uf")
 	private String uf;
+
+	@CSVProperty(column = "name")
 	private String name;
+	
+	@CSVProperty(column = "capital")
 	private Boolean capital;
+	
+	@CSVProperty(column = "lon")
 	private Double longitude;
+	
+	@CSVProperty(column = "lat")
 	private Double latitude;
+	
+	@CSVProperty(column = "no_accents")
 	private String noAccents;
+	
+	@CSVProperty(column = "alternative_names")	
 	private String alternativeNames;
+	
+	@CSVProperty(column = "microregion")
 	private String microregion;
+	
+	@CSVProperty(column = "mesoregion")
 	private String mesoregion;
 
-	@CSVProperty(column = "ibge_id")
 	public Long getIbgeId() {
 		return ibgeId;
 	}
 
-	@CSVProperty(column = "ibge_id")
 	public void setIbgeId(final Long ibgeId) {
 		this.ibgeId = ibgeId;
 	}
 
-	@CSVProperty(column = "uf")
 	public String getUf() {
 		return uf;
 	}
 
-	@CSVProperty(column = "uf")
 	public void setUf(final String uf) {
 		this.uf = uf;
 	}
-
-	@CSVProperty(column = "name")
+	
 	public String getName() {
 		return name;
 	}
 	
-	@CSVProperty(column = "name")
 	public void setName(final String name) {
 		this.name = name;
 	}
 
-	@CSVProperty(column = "capital")
 	public Boolean getCapital() {
 		return capital;
 	}
 
-	@CSVProperty(column = "capital")
 	public void setCapital(final Boolean capital) {
 		this.capital = capital;
 	}
 
-	@CSVProperty(column = "lon")
 	public Double getLongitude() {
 		return longitude;
 	}
 
-	@CSVProperty(column = "lon")
 	public void setLongitude(final Double longitude) {
 		this.longitude = longitude;
 	}
 
-	@CSVProperty(column = "lat")
 	public Double getLatitude() {
 		return latitude;
 	}
 
-	@CSVProperty(column = "lat")
 	public void setLatitude(final Double latitude) {
 		this.latitude = latitude;
 	}
 
-	@CSVProperty(column = "no_accents")
 	public String getNoAccents() {
 		return noAccents;
 	}
 
-	@CSVProperty(column = "no_accents")
 	public void setNoAccents(final String noAccents) {
 		this.noAccents = noAccents;
 	}
 
-	@CSVProperty(column = "alternative_names")
 	public String getAlternativeNames() {
 		return alternativeNames;
 	}
 
-	@CSVProperty(column = "alternative_names")
 	public void setAlternativeNames(String alternativeNames) {
 		this.alternativeNames = alternativeNames;
 	}
 
-	@CSVProperty(column = "microregion")
 	public String getMicroregion() {
 		return microregion;
 	}
 
-	@CSVProperty(column = "microregion")
 	public void setMicroregion(final String microregion) {
 		this.microregion = microregion;
 	}
 
-	@CSVProperty(column = "mesoregion")
 	public String getMesoregion() {
 		return mesoregion;
 	}
-
-	@CSVProperty(column = "mesoregion")
+	
 	public void setMesoregion(final String mesoregion) {
 		this.mesoregion = mesoregion;
 	}

@@ -8,17 +8,17 @@ import java.util.regex.Pattern;
 import br.com.involves.controller.CityController;
 import br.com.involves.controller.Controller;
 import br.com.involves.enums.ParamCommand;
+import br.com.involves.util.Constants;
 import br.com.involves.util.Message;
 
 public class DataSetAssistant {
 
-	private Controller controller;
+	private final Controller controller = new CityController();
 	private Path path;
 	
 	public DataSetAssistant(final String fileName) {
 		path = Paths.get(fileName);
-		controller = new CityController();
-		controller.loadCsv(path.toAbsolutePath().toString(), Message.CSV_SEPARATOR);
+		controller.loadCsv(path.toAbsolutePath().toString(), Constants.CSV_SEPARATOR);
 	}
 
 	public void assist(final String params) {
@@ -26,7 +26,7 @@ public class DataSetAssistant {
 		final ParamCommand commandParam = ParamCommand.get(params);
 		
 		if (commandParam == null) {
-			Message.printError("Invalid parameters! The expected commands are: " + ParamCommand.showAllCommandSintax());
+			Message.printError("Invalid parameters! The expected commands are: " + ParamCommand.showAllCommandSyntax());
 			return;
 		}
 		
@@ -70,7 +70,7 @@ public class DataSetAssistant {
 				return;
 			}
 			
-			final String cleanedValue = propertyValue.replaceAll(Message.PATTERN_REGEX_BRACKETS, "");
+			final String cleanedValue = propertyValue.replaceAll(Constants.PATTERN_REGEX_BRACKETS, "");
 			final String result = controller.filterBy(propertyName, cleanedValue);
 			Message.print(result);
 			return;

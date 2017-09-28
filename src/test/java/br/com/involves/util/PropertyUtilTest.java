@@ -64,47 +64,46 @@ public class PropertyUtilTest {
 	
 	class TestProperty {
 		
+		@CSVProperty(column = "long_property")
 		private Long longProperty;
+
+		@CSVProperty(column = "string_property")
 		private String stringProperty;
+
+		@CSVProperty(column = "boolean_property")
 		private Boolean booleanProperty;
+
+		@CSVProperty(column = "double_property")
 		private Double doubleProperty;
 		
-		@CSVProperty(column = "long_property")
 		public Long getLongProperty() {
 			return longProperty;
 		}
 		
-		@CSVProperty(column = "long_property")
 		public void setLongProperty(final Long longProperty) {
 			this.longProperty = longProperty;
 		}
 
-		@CSVProperty(column = "string_property")
 		public String getStringProperty() {
 			return stringProperty;
 		}
 		
-		@CSVProperty(column = "string_property")
 		public void setStringProperty(final String stringProperty) {
 			this.stringProperty = stringProperty;
 		}
 
-		@CSVProperty(column = "boolean_property")
 		public Boolean getBooleanProperty() {
 			return booleanProperty;
 		}
 		
-		@CSVProperty(column = "boolean_property")
 		public void setBooleanProperty(final Boolean booleanProperty) {
 			this.booleanProperty = booleanProperty;
 		}
 		
-		@CSVProperty(column = "double_property")
 		public Double getDoubleProperty() {
 			return doubleProperty;
 		}
 		
-		@CSVProperty(column = "double_property")
 		public void setDoubleProperty(final Double doubleProperty) {
 			this.doubleProperty = doubleProperty;
 		}

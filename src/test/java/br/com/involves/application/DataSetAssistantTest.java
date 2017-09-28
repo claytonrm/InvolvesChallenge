@@ -17,7 +17,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.involves.util.Message;
+import br.com.involves.util.Constants;
 import br.com.involves.util.Writer;
 
 public class DataSetAssistantTest {
@@ -33,8 +33,8 @@ public class DataSetAssistantTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		final Map<String, List<String[]>> fileContent = new HashMap<>();
-		fileContent.put(Message.HEADER, createHeader());
-		fileContent.put(Message.CONTENT, createContent());
+		fileContent.put(Constants.HEADER, createHeader());
+		fileContent.put(Constants.CONTENT, createContent());
 		
 		path = Paths.get(RESOURCE_DIR + "/test.csv");
 		

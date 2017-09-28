@@ -28,7 +28,6 @@ public class ReaderTest {
 	
 	private static final String RESOURCE_DIR = "src/test/java/";
 	
-	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 	
 	@BeforeClass
@@ -54,12 +53,11 @@ public class ReaderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		System.setOut(new PrintStream(outContent));
 		System.setErr(new PrintStream(errContent));
 	}
 
 	@Test
-	public void shouldReadACsvFileWithoutHeader() {
+	public void shouldReadACsvFileWithoutHeaderWithContent() {
 		final Map<String, List<String[]>> content = Reader.readCsv(pathNameWithoutHeader.toAbsolutePath().toString(), SEPARATOR);
 		
 		assertNull(content.get("header"));
@@ -67,7 +65,7 @@ public class ReaderTest {
 	}
 	
 	@Test
-	public void shouldReadACsvFileWithHeader() {
+	public void shouldReadACsvFileWithHeaderAndContent() {
 		final boolean containsHeader = true;
 		final Map<String, List<String[]>> content = Reader.readCsv(pathNameWithHeader.toAbsolutePath().toString(), SEPARATOR, containsHeader);
 		

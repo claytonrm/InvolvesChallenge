@@ -13,11 +13,7 @@ import br.com.involves.util.PropertyUtil;
 
 public class CityService implements Service<City> {
 
-	private Repository<City> repository;
-	
-	public CityService() {
-		repository = new CityInMemoryRepository();
-	}
+	private final Repository<City> repository = new CityInMemoryRepository();
 	
 	@Override
 	public void insertAll(final Set<City> entities) {

@@ -20,7 +20,7 @@ import br.com.involves.util.Writer;
 public class CityControllerTest {
 
 	private static Path path;
-	private static final String FILE_NAME = "src/test/resources/test.csv";
+	private static final String FILENAME = "src/test/resources/test.csv";
 	
 	private Controller controller;
 	
@@ -30,7 +30,7 @@ public class CityControllerTest {
 		fileContent.put("header", createHeader());
 		fileContent.put("content", createContent());
 		
-		path = Paths.get(FILE_NAME);
+		path = Paths.get(FILENAME);
 		
 		Writer.createCsvFile(path.toAbsolutePath().toString(), fileContent);
 	}
@@ -47,21 +47,21 @@ public class CityControllerTest {
 
 	@Test
 	public void shouldLoadACsvFileAndCountAllRecords() {
-		controller.loadCsv(FILE_NAME, ",");
+		controller.loadCsv(FILENAME, ",");
 		
 		Assert.assertEquals(8, controller.countAll());
 	}
 	
 	@Test
 	public void shouldCountAllCitiesByDistinctProperty() {
-		controller.loadCsv(FILE_NAME, ",");
+		controller.loadCsv(FILENAME, ",");
 		
 		Assert.assertEquals(6, controller.countDistinctBy("name"));
 	}
 	
 	@Test
 	public void shouldFilterObjectByPropertyValue() {
-		controller.loadCsv(FILE_NAME, ",");
+		controller.loadCsv(FILENAME, ",");
 		
 		final String[] header = createHeader().get(0);
 		final List<String[]> content = createContent();

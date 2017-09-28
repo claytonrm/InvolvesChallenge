@@ -15,7 +15,7 @@ The followings items are required:
 
 ## Installing
 
-First, you need to clone the following [repository](git@github.com:claytonrm/InvolvesChallenge.git). Then, you will need to compile using 
+First, you need to clone the following [repository](https://github.com/claytonrm/InvolvesChallenge.git). Then, you will need to compile using 
 ```
 gradle build
 ```

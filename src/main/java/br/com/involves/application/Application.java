@@ -9,7 +9,7 @@ public class Application {
 	private DataSetAssistant dataSetAssistant;
 	
 	public void run() {
-		dataSetAssistant = new DataSetAssistant("files/cidades.csv");
+		dataSetAssistant = new DataSetAssistant(Message.RESOURCE_DIR + "cidades.csv");
 		
 		try (final Scanner scanner = new Scanner(System.in)) {
 			Message.printOptions();

@@ -6,6 +6,7 @@ public class Message {
 		new AssertionError("This class must not be instantiate!");
 	}
 	
+	public static final String RESOURCE_DIR = "src/main/resources/";
 	public static final String CSV_SEPARATOR = ","; 
 	public static final String HEADER = "header";
 	public static final String CONTENT = "content";

@@ -27,17 +27,16 @@ In order to run the tests you will need junit, which will be downloaded by gradl
 
 ## Running the Project
 
-In order to run the project you will need to run one of the following commands:
+In order to run the project you will need to run the following command:
+
+```
+java -jar dataset-assistant.jar <one_of_the_commands_below>
+```
+by using one of the parameters
 
 - **count** * - writes on the console the total amount of imported records (neglecting the header)
 - **count distinct [property]** - writes on the console the total amount of distinct values of the given property (column)
 - **filter [property] [value]** - writes on the console the header and every row that contains the given value
-
-by calling
-
-```
-java -jar dataset-assistant.jar <one_of_the_commands_above>
-```
 
 ### Example of usage
 
@@ -46,3 +45,7 @@ If you want to find Florianópolis city in the dataset:
 ```
 java -jar dataset-assistant.jar filter [name] [Florianópolis]
 ```
+
+### Authors
+
+* Clayton R. Mendonça -[GitHub](https://github.com/claytonrm/) [LinkedIn](https://www.linkedin.com/in/claytonmendonca/)

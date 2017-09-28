@@ -6,23 +6,28 @@ apply plugin: 'application'
 mainClassName = 'br.com.involves.application.Main'
 
 repositories {
-  jcenter()
+	jcenter()
 }
 
 dependencies {
-  testCompile 'junit:junit:4.12'
+	testCompile 'junit:junit:4.12'
 }
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 jar {
-  baseName = 'dataset-assistant'
-  version = '1.0'
+	baseName = 'dataset-assistant'
+	version = '1.0'
 
-  manifest {
-	  attributes(
-	  	'Main-Class': 'br.com.involves.application.Main'
-	  )
-  }
+	manifest {
+		attributes('Main-Class': 'br.com.involves.application.Main')
+	}
+  
+}
+
+test {
+	testLogging {
+		events "PASSED", "STARTED", "FAILED", "SKIPPED"
+	}
 }

@@ -6,9 +6,13 @@ public class Constants {
 	public static final String CSV_SEPARATOR = ","; 
 	public static final String HEADER = "header";
 	public static final String CONTENT = "content";
-	public static final String PATTERN_REGEX_BETWEEN_BRACKETS = "\\[.+\\]";
-	public static final String PATTERN_REGEX_BRACKETS = "[\\[\\]]";
 	public static final String NEW_LINE = "\n";
 	public static final String HORIZONTAL_SEPARATOR = "-------------------------------------------------------------------------------------------\n";
+	public static final String PATTERN_REGEX_BETWEEN_BRACKETS = "\\[.+\\]";
+	public static final String PATTERN_REGEX_BRACKETS = "[\\[\\]]";
+	
+	public static final String PATTERN_REGEX_COUNT_ALL = "count\\s+\\*\\s*$";
+	public static final String PATTERN_REGEX_COUNT_DISTINCT = "count\\s+distinct\\s+(\\[.+\\])\\s*$";
+	public static final String PATTERN_REGEX_FILTER = "filter\\s+(\\[.+\\])\\s+(\\[.+\\])\\s*$";
 	
 }

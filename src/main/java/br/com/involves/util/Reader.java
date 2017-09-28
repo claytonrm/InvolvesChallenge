@@ -12,9 +12,6 @@ import java.util.Map;
 
 public class Reader {
 
-	private static final String HEADER = "header";
-	private static final String CONTENT = "content";
-	
 	/**
 	 * @param fileName - The entire path of the file.
 	 * @param separator - The separator to separate in columns.
@@ -32,18 +29,18 @@ public class Reader {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				final String[] columns = line.split(separator);
-				final List<String[]> header = fullContent.get(HEADER);
+				final List<String[]> header = fullContent.get(Constants.HEADER);
 
 				if (containsHeader && header == null) {
 					final List<String[]> firstLine = new ArrayList<>();
 					firstLine.add(columns);
-					fullContent.put(HEADER, firstLine);
+					fullContent.put(Constants.HEADER, firstLine);
 					continue;
 				}
 				content.add(columns);
 			}
 			
-			fullContent.put(CONTENT, content);
+			fullContent.put(Constants.CONTENT, content);
 		} catch (IOException e) {
 			Message.printError("Cannot read this file \"%s\".");
 		}

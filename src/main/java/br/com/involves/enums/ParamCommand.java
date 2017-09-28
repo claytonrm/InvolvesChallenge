@@ -1,10 +1,12 @@
 package br.com.involves.enums;
 
+import br.com.involves.util.Constants;
+
 public enum ParamCommand {
 	
-	COUNT_ALL("count *", "count\\s+\\*\\s*$", "In order to count all records."), 
-	COUNT_DISTINCT("count distinct [property]", "count\\s+distinct\\s+(\\[.+\\])\\s*$", "In order to count the distinct values of the property."), 
-	FILTER("filter [property] [value]", "filter\\s+(\\[.+\\])\\s+(\\[.+\\])\\s*$", "In order to filter a value by specific property.");
+	COUNT_ALL("count *", Constants.PATTERN_REGEX_COUNT_ALL, "In order to count all records."), 
+	COUNT_DISTINCT("count distinct [property]", Constants.PATTERN_REGEX_COUNT_DISTINCT, "In order to count the distinct values of the property."), 
+	FILTER("filter [property] [value]", Constants.PATTERN_REGEX_FILTER, "In order to filter a value by specific property.");
 	
 	private String commandSyntax;
 	private String regexPattern;

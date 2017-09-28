@@ -1,8 +1,16 @@
-# InvolvesChallenge
+# Involves Challenge
 
-Projeto destinado a etapa de seleção de candidatos da empresa Involves Tecnnologia.
-Trata-se de um leitor de arquivo csv em que o usuário interage com a digitaço de comandos pré-definidos.
+Project proposed by Involves in order to select candidates to developer position.
+It's a CSV reader which an user may interact by typing pre-defined commands in order to visualize data.
 
-## Authors
+## Gettind Started
 
-* **Clayton R. Mendonça** - [github](https://github.com/claytonrm)
+
+
+## Prerequisites
+
+The followings items are required:
+- [JAVA 8] (http://www.oracle.com/technetwork/pt/java/javase/downloads/jdk8-downloads-2133151.html)
+- [Gradle] (https://gradle.org/)
+
+

@@ -17,7 +17,7 @@ The followings items are required:
 
 First, you need to clone the following [repository](git@github.com:claytonrm/InvolvesChallenge.git). Then, you will need to compile using 
 ```
-./gradle build
+gradle build
 ```
 
 ## Running the Tests
@@ -25,7 +25,7 @@ First, you need to clone the following [repository](git@github.com:claytonrm/Inv
 In order to run the tests you will need junit, which will be downloaded by gradle. Just execute the following command
 
 ```
-./gradle test
+gradle test
 ```
 
 ## Running the Project
@@ -33,9 +33,9 @@ In order to run the tests you will need junit, which will be downloaded by gradl
 In order to run the project you will need to run the following command:
 
 ```
-java -jar dataset-assistant.jar <one_of_the_commands_below>
+java -jar build/libs/dataset-assistant-1.0.jar
 ```
-by using one of the parameters
+after that, you can use one of the parameters
 
 - **count** * - writes on the console the total amount of imported records (neglecting the header)
 - **count distinct [property]** - writes on the console the total amount of distinct values of the given property (column)
@@ -46,7 +46,11 @@ by using one of the parameters
 If you want to find Florianópolis city in the dataset:
 
 ```
-java -jar dataset-assistant.jar filter [name] [Florianópolis]
+java -jar build/libs/dataset-assistant.jar
+```
+Wait a second and type:
+```
+filter [name] [Florianópolis]
 ```
 
 ### Authors

@@ -1,5 +1,6 @@
 package br.com.involves.controller;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,7 +21,8 @@ import br.com.involves.util.Writer;
 public class CityControllerTest {
 
 	private static Path path;
-	private static final String FILENAME = "src/test/resources/test.csv";
+	private static final String RESOURCE_DIR = "src/test/resources/";
+	private static final String FILENAME = RESOURCE_DIR + "test.csv";
 	
 	private Controller controller;
 	
@@ -29,6 +31,11 @@ public class CityControllerTest {
 		final Map<String, List<String[]>> fileContent = new HashMap<>();
 		fileContent.put("header", createHeader());
 		fileContent.put("content", createContent());
+		
+		final File directory = new File(RESOURCE_DIR);
+		if (!directory.exists()) {
+			directory.mkdirs();
+		}
 		
 		path = Paths.get(FILENAME);
 		

@@ -42,7 +42,7 @@ public class Reader {
 			
 			fullContent.put(Constants.CONTENT, content);
 		} catch (IOException e) {
-			Message.printError("Cannot read this file \"%s\".");
+			Message.printError("Cannot read this file." + e.getMessage());
 		}
 
 		return fullContent;

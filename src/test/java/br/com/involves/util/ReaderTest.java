@@ -76,10 +76,10 @@ public class ReaderTest {
 	@Test
 	public void shouldPrintAnErrorCannotReadThisFile() {
 		final boolean containsHeader = true;
-		final String anotherFile = "files/cidadesx.csv";
+		final String anotherFile = RESOURCE_DIR + "cidadesx.csv";
 		Reader.readCsv(anotherFile, SEPARATOR, containsHeader);
 		
-		Assert.assertEquals("Cannot read this file \"%s\".\n", errContent.toString());
+		Assert.assertTrue(errContent.toString().contains("Cannot read this file."));
 	}
 	
 	private static List<String[]> createHeader() {

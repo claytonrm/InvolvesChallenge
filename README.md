@@ -15,7 +15,10 @@ The followings items are required:
 
 ## Installing
 
-First, you need to clone the following [repository](git@github.com:claytonrm/InvolvesChallenge.git). Then, you will need to compile using TODO
+First, you need to clone the following [repository](git@github.com:claytonrm/InvolvesChallenge.git). Then, you will need to compile using 
+```
+./gradle build
+```
 
 ## Running the Tests
 
@@ -48,4 +51,4 @@ java -jar dataset-assistant.jar filter [name] [Florianópolis]
 
 ### Authors
 
-* Clayton R. Mendonça -[GitHub](https://github.com/claytonrm/) [LinkedIn](https://www.linkedin.com/in/claytonmendonca/)
+* Clayton R. Mendonça - [GitHub](https://github.com/claytonrm/) [LinkedIn](https://www.linkedin.com/in/claytonmendonca/)

@@ -25,7 +25,7 @@ public class CityController implements Controller {
 		
 		final Set<City> cities = new HashSet<>();
 		
-		//TODO XXX - Try to use that annotations
+		//TODO XXX - Try to use annotations
 		for (String[] column : records) {
 			final City city = new City();
 			city.setIbgeId(Long.parseLong(column[0]));

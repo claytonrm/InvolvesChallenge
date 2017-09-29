@@ -44,7 +44,7 @@ public class DataSetAssistant {
 		final ParamCommand commandParam = ParamCommand.get(params);
 		
 		if (commandParam == null) {
-			Message.printError("Invalid parameters! The expected commands are: " + ParamCommand.showAllCommandSyntax());
+			Message.printError("Invalid parameters! The expected commands are:\n" + ParamCommand.showAllCommandSyntax());
 			return;
 		}
 		

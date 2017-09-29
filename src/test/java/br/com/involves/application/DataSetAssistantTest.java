@@ -116,7 +116,7 @@ public class DataSetAssistantTest {
 		
 		dataSetAssistant.assist(params);
 		
-		final String expected = "Invalid parameters! The expected commands are: ";
+		final String expected = "Invalid parameters! The expected commands are:";
 		
 		Assert.assertTrue(errContent.toString().contains(expected));
 	}
@@ -136,7 +136,7 @@ public class DataSetAssistantTest {
 		
 		dataSetAssistant.assist(params);
 		
-		final String expected = "Invalid parameters! The expected commands are: ";
+		final String expected = "Invalid parameters! The expected commands are:";
 		
 		Assert.assertTrue(errContent.toString().contains(expected));
 	}
@@ -147,7 +147,7 @@ public class DataSetAssistantTest {
 		
 		dataSetAssistant.assist(params);
 		
-		final String expected = "Invalid parameters! The expected commands are: ";
+		final String expected = "Invalid parameters! The expected commands are:";
 		
 		Assert.assertTrue(errContent.toString().contains(expected));
 	}
@@ -188,7 +188,7 @@ public class DataSetAssistantTest {
 		
 		dataSetAssistant.assist(params);
 		
-		final String expected = "Invalid parameters! The expected commands are: ";
+		final String expected = "Invalid parameters! The expected commands are:";
 		
 		Assert.assertTrue(errContent.toString().contains(expected));
 	}

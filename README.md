@@ -17,6 +17,10 @@ The followings items are required:
 
 First, you need to clone the following repository `https://github.com/claytonrm/InvolvesChallenge.git`. Then, you will need to compile using 
 ```
+cd InvolvesChallenge/
+```
+
+```
 gradle build
 ```
 
